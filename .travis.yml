@@ -1,0 +1,47 @@
+#service:
+#- docker
+
+notifications:
+  email: false
+
+git:
+  depth: false
+  quiet: true
+
+language: java
+jdk: oraclejdk8
+node_js: lts/*
+
+# addons:
+#   apt:
+#     packages:
+#       - sudo
+#       - lsof
+#       - wget
+#       - bash
+#       - curl
+#       - jq
+#       - libxml2-utils
+#       - unzip
+#       - docker-ce
+#       - python-pip
+#       - libappindicator1
+#       - fonts-liberation
+#       - google-chrome-stable
+
+install: true
+# before_install:
+#   - export CHROME_BIN=/usr/bin/google-chrome
+#   - export DISPLAY=:99.0
+#   - sh -e /etc/init.d/xvfb start
+#   #
+#   - sudo pip install docker-compose httpie >/dev/null 2>&1
+#   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+#   - stop_any 80 5432 8002 8001
+
+script:
+  - export parent=$(pwd)
+  # jgiven tests and docs
+  - cd ${parent}/frontend
+  - npm i
+  - npm run build
