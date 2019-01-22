@@ -2,6 +2,7 @@
 == REST API documentation
 
 === Show API description
+[cols="30%,70%"]
 |===
 |*Title* |*Show API description*
 

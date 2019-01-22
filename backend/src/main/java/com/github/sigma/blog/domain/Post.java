@@ -1,11 +1,11 @@
-package com.github.sigma.blog.data;
+package com.github.sigma.blog.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.*;
 
-import static com.github.sigma.blog.data.Post.FIND_ALL;
-import static com.github.sigma.blog.data.Post.FIND_BY_ID;
+import static com.github.sigma.blog.domain.Post.FIND_ALL;
+import static com.github.sigma.blog.domain.Post.FIND_BY_ID;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity

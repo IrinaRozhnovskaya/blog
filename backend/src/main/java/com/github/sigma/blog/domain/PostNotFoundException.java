@@ -1,4 +1,4 @@
-package com.github.sigma.blog.post;
+package com.github.sigma.blog.domain;
 
 import java.util.UUID;
 

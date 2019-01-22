@@ -1,4 +1,4 @@
-package com.github.sigma.blog.data;
+package com.github.sigma.blog.cdi;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;

@@ -1,6 +1,4 @@
-package com.github.sigma.blog.post.dto;
-
-import com.github.sigma.blog.data.Post;
+package com.github.sigma.blog.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

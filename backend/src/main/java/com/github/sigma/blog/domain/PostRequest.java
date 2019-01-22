@@ -1,4 +1,4 @@
-package com.github.sigma.blog.post.dto;
+package com.github.sigma.blog.domain;
 
 public class PostRequest {
 

@@ -139,7 +139,7 @@
                 </dependencies>
                 <configuration>
                     <outputDirectory>${project.basedir}/public</outputDirectory>
-                    <sourceDirectory>src</sourceDirectory>
+                    <sourceDirectory>src/main/adoc</sourceDirectory>
                     <relativeBaseDir>true</relativeBaseDir>
                     <headerFooter>true</headerFooter>
                     <imagesDir>.</imagesDir><!-- Don't know why, but yes - use base sources dir... -->

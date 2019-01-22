@@ -1,10 +1,10 @@
 package com.github.sigma.blog.actions.api.post;
 
+import com.github.sigma.blog.actions.Hateoas;
 import com.github.sigma.blog.actions.api.BaseRestAction;
-import com.github.sigma.blog.actions.api.HATEOAS;
-import com.github.sigma.blog.post.PostService;
-import com.github.sigma.blog.post.dto.PostRequest;
-import com.github.sigma.blog.post.dto.PostResponse;
+import com.github.sigma.blog.domain.PostService;
+import com.github.sigma.blog.domain.PostRequest;
+import com.github.sigma.blog.domain.PostResponse;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -29,7 +29,7 @@ http post http://127.0.0.1:8080/blog/api/post/new?postText=trololo
 public class NewAction extends BaseRestAction {
 
     @Inject
-    HATEOAS hateoas;
+    Hateoas hateoas;
 
     @Inject
     PostService postService;

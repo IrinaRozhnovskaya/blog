@@ -1,9 +1,4 @@
-package com.github.sigma.blog.post;
-
-import com.github.sigma.blog.data.Post;
-import com.github.sigma.blog.data.PostRepository;
-import com.github.sigma.blog.post.dto.PostRequest;
-import com.github.sigma.blog.post.dto.PostResponse;
+package com.github.sigma.blog.domain;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

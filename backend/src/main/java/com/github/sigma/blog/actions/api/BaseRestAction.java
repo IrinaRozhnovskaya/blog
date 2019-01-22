@@ -1,5 +1,6 @@
 package com.github.sigma.blog.actions.api;
 
+import com.github.sigma.blog.actions.Hateoas;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -24,7 +25,7 @@ import static com.opensymphony.xwork2.Action.INPUT;
 public abstract class BaseRestAction extends ActionSupport {
 
     @Inject
-    HATEOAS hateoas;
+    Hateoas hateoas;
 
     @PostConstruct
     public void init() {

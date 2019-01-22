@@ -28,7 +28,7 @@
       fetchData() {
 /*
         fetch('http://127.0.0.1:8080/blog/api/posts/all')
-          .then(data => data.json())
+          .then(domain => domain.json())
           .then(json => JSON.parse(json))
           .then(posts => this.posts = posts)
 */

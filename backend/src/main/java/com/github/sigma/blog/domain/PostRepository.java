@@ -1,12 +1,12 @@
-package com.github.sigma.blog.data;
+package com.github.sigma.blog.domain;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.*;
 
-import static com.github.sigma.blog.data.Post.FIND_ALL;
-import static com.github.sigma.blog.data.Post.FIND_BY_ID;
+import static com.github.sigma.blog.domain.Post.FIND_ALL;
+import static com.github.sigma.blog.domain.Post.FIND_BY_ID;
 import static java.util.Collections.unmodifiableList;
 
 @Stateless

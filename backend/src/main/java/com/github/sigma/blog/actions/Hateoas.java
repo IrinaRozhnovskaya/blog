@@ -1,4 +1,4 @@
-package com.github.sigma.blog.actions.api;
+package com.github.sigma.blog.actions;
 
 import javax.enterprise.context.Dependent;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +11,7 @@ import java.util.UUID;
 import static java.lang.String.format;
 
 @Dependent
-public class HATEOAS {
+public class Hateoas {
 
     public String linkTo(HttpServletRequest request, String... pathParts)  {
         URL url = null;
