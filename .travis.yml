@@ -40,10 +40,4 @@ install: true
 #   - stop_any 80 5432 8002 8001
 
 script:
-  - export parent=$(pwd)
-  #
-  - ./mvnw clean package -f ${parent}/backend/pom.xml
-  #
-  - cd ${parent}/frontend
-  - npm i
-  - npm run build
+  - ./mvnw
