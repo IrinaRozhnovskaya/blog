@@ -1,0 +1,20 @@
+ifdef::backend-html5[]
+= Irina Rozhnovskaya {project-name} ({project-version})
+endif::backend-html5[]
+ifndef::backend-html5[]
+= Irina Rozhnovskaya {project-name} ({project-version})
+endif::backend-html5[]
+{project-author-name} <{project-author-email}>
+{docdatetime}
+:doctype: book
+:toc: left
+:toclevels: 4
+:source-highlighter: prettify
+:icons: font
+:hide-uri-scheme:
+:revnumber: {project-version}
+:example-caption!:
+
+include::./includes/DEVELOPER_GUIDE.adoc[]
+include::./includes/REST_API_DOCUMENTATION.adoc[]
+

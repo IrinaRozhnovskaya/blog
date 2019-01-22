@@ -1,0 +1,156 @@
+
+== REST API documentation
+
+=== Show API description
+|===
+|*Title* |*Show API description*
+
+Returns json data with API description.
+
+
+|*URL*
+| `/api`
+
+|*Method*
+|`GET/POST`
+
+|*URL Params*
+|*Required:*
+
+None
+|*Data Params*
+|None
+
+|*Success Response*
+|*Code:* 200 OK
+
+*Content:* ``{
+               "links": {
+                      "_self        GET": "http://localhost:8080/api",
+                   "create new: POST": "http://localhost:8080/api/post/new",
+                   "find all     GET": "http://localhost:8080/api/post/all",
+                   "find one     GET": "http://localhost:8080/api/post/one",
+                   "health       GET": "http://localhost:8080/api/health",
+                   "update new:  PUT": "http://localhost:8080/api/post/edit"
+               }
+           } ``
+|===
+=== Create new post
+|===
+|*Title* |*Create new post*
+
+Returns location of created post.
+
+|*URL*
+| `/api/post/new`
+
+|*Method*
+|`POST`
+
+|*URL Params*
+|*Required:*
+
+`postText=[String]`
+|*Data Params*
+|None
+
+|*Success Response*
+|*Code:* 201 Created
+
+*Content:* ``{} ``
+
+*Location:* `/api/post/new?id=:id`
+|===
+
+=== Show all posts
+|===
+|*Title* |*Show all posts*
+
+Returns json data of all posts.
+
+
+|*URL*
+| `/api/post/all`
+
+|*Method*
+|`GET/POST`
+
+|*URL Params*
+|*Required:*
+
+None
+|*Data Params*
+|None
+|*Success Response*
+|*Code:* 200 OK
+
+*Content:* ``{"post":
+[
+{"body":"trololo","id":"9b4366bd-e0e6-4c0b-b46a-4329efadd5a1","when":"2019.01.18 15:57 GMT"},{"body":"ololo","id":"d9252cb6-88e8-4a92-831e-745241ffe3f7","when":"2019.01.18 15:00 GMT"}]} ``
+
+|===
+=== Show one post
+|===
+|*Title* |*Show one post*
+
+Returns json data of one post.
+
+
+|*URL*
+| `/api/post/one`
+
+|*Method*
+|`GET/POST`
+
+|*URL Params*
+|*Required:*
+
+None
+|*Data Params*
+|`id=[UUID]`
+|*Success Response*
+|*Code:* 200 OK
+
+*Content:* ``
+{
+    "postResponse": {
+        "body": "trololo",
+        "id": "5e48ee43-d428-4bbe-bcbc-0d860ca96e63",
+        "when": "2019.01.18 13:25 GMT"
+    }
+}
+ ``
+|===
+=== Edit one post
+|===
+|*Title* |*Show one edited post*
+
+Returns json data of one edited post.
+
+|*URL*
+| `/api/post/edit`
+
+|*Method*
+|`PUT`
+
+|*URL Params*
+|*Required:*
+
+None
+|*Data Params*
+|`id=[UUID]`
+
+`postText=[String]`
+|*Success Response*
+|*Code:* 200 OK
+
+*Content:* ``
+{
+    "postResponse": {
+        "body": "editedOlolo",
+        "id": "4e103103-9d5a-42ec-873a-58f1bed6ef44",
+        "when": "2019.01.18 13:27 GMT"
+    }
+}
+ ``
+|===

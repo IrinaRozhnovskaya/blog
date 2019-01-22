@@ -1,0 +1,36 @@
+
+== Developer guide
+
+=== Setup development environment
+
+=== build, run and test with Docker
+
+[source,bash]
+----
+
+./mvnw ; ./mvnw -Pdocker docker-compose:up
+
+http post :8080/blog/api/
+http post :8080/blog/api/post/new?postText=trololo
+http post :8080/blog/api/post/all
+http post :8080/blog/api/post/one id=00000000-0000-0000-0000-000000000000
+http put :8080/blog/api/post/edit id=00000000-0000-0000-0000-000000000000 postText=ololo
+
+./mvnw -Pdocker docker-compose:down
+----
+
+=== Documentation
+=== run and test
+
+.using serve (node / npm required)
+[source,bash]
+----
+# install node / npm
+# brew install node
+# scoop install nodejs-lts
+
+npm i -g serve
+serve public
+curl http://127.0.0.1:5000
+----
+

@@ -41,7 +41,9 @@ install: true
 
 script:
   - export parent=$(pwd)
-  # jgiven tests and docs
+  #
+  - ./mvnw clean package -f ${parent}/backend/pom.xml
+  #
   - cd ${parent}/frontend
   - npm i
   - npm run build
