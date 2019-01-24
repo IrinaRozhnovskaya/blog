@@ -16,7 +16,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    build: .
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
     restart: unless-stopped
     ports:
       - '5005:5005'

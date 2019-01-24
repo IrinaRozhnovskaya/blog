@@ -21,11 +21,11 @@ public class PostService implements Serializable {
     @Inject
     PostRepository postRepository;
 
-    @PostConstruct
-    public void initTestData() {
-        final PostRequest request = PostRequest.of("ololo");
-        save(request);
-    }
+//    @PostConstruct
+//    public void initTestData() {
+//        final PostRequest request = PostRequest.of("ololo");
+//        save(request);
+//    }
 
     @Transactional
     public PostResponse save(final PostRequest sendPostRequest) {

@@ -1,3 +1,3 @@
 @echo off
-call mvnw.cmd -Pdocker docker-compose:up -f .\backend\pom.xml
-call docker-compose -f .\backend\docker-compose.yaml logs -f -t
+call mvnw.cmd -Pdocker docker-compose:up -f .\docker\pom.xml
+call docker-compose -f .\docker\docker-compose.yaml logs -f -t

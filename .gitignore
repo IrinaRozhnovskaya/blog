@@ -6,7 +6,7 @@
 out/
 dist/
 target/
-backend/public/
+public/
 frontend/package-lock.json
 .DS_Store
 node_modules

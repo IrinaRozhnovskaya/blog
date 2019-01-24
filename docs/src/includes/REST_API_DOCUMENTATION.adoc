@@ -8,7 +8,6 @@
 
 Returns json data with API description.
 
-
 |*URL*
 | `/api`
 
@@ -27,16 +26,17 @@ None
 
 *Content:* ``{
                "links": {
-                      "_self        GET": "http://localhost:8080/api",
-                   "create new: POST": "http://localhost:8080/api/post/new",
-                   "find all     GET": "http://localhost:8080/api/post/all",
-                   "find one     GET": "http://localhost:8080/api/post/one",
-                   "health       GET": "http://localhost:8080/api/health",
-                   "update new:  PUT": "http://localhost:8080/api/post/edit"
+                      "_self        GET": "http://localhost:8080/blog/api",
+                   "create new: POST": "http://localhost:8080/blog/api/post/new",
+                   "find all     GET": "http://localhost:8080/blog/api/post/all",
+                   "find one     GET": "http://localhost:8080/blog/api/post/one",
+                   "health       GET": "http://localhost:8080/blog/api/health",
+                   "update new:  PUT": "http://localhost:8080/blog/api/post/edit"
                }
            } ``
 |===
 === Create new post
+[cols="30%,70%"]
 |===
 |*Title* |*Create new post*
 
@@ -60,10 +60,11 @@ Returns location of created post.
 
 *Content:* ``{} ``
 
-*Location:* `/api/post/new?id=:id`
+*Location:* `/blog/api/post/new/api/post/new?id=:id`
 |===
 
 === Show all posts
+[cols="30%,70%"]
 |===
 |*Title* |*Show all posts*
 
@@ -91,6 +92,7 @@ None
 
 |===
 === Show one post
+[cols="30%,70%"]
 |===
 |*Title* |*Show one post*
 
@@ -123,6 +125,7 @@ None
  ``
 |===
 === Edit one post
+[cols="30%,70%"]
 |===
 |*Title* |*Show one edited post*
 
