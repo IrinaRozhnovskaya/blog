@@ -10,13 +10,24 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.opensymphony.xwork2.Action.ERROR;
-import static com.opensymphony.xwork2.Action.INPUT;
+import static com.opensymphony.xwork2.Action.*;
 
 @Results({
-        @Result(type = "json"),
-        @Result(name = INPUT, type = "json"),
-        @Result(name = ERROR, type = "json")
+    @Result(type = "json"),
+    @Result(name = INPUT, type = "json"),
+    @Result(name = ERROR, type = "json", params = {
+        "errorCode", "-1",
+        "statusCode", "400",
+        "ignoreHierarchy", "false",
+        "includeProperties", ".*",
+    })
+})
+@ExceptionMappings({
+    @ExceptionMapping(
+        exception = "java.lang.Exception",
+        params = { "param1", "val1" },
+        result = SUCCESS
+    ),
 })
 @ApplicationScoped
 @Namespace("/api/post")
@@ -34,7 +45,7 @@ public class AllAction extends BaseRestAction {
 
     @Override
     @Action("all")
-    public String execute() throws Exception {
+    public String execute() {
         response = postService.findPosts();
         return SUCCESS;
     }

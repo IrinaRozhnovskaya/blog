@@ -6,10 +6,7 @@ import com.github.sigma.blog.domain.PostService;
 import com.github.sigma.blog.domain.PostRequest;
 import com.github.sigma.blog.domain.PostResponse;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +14,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import static com.opensymphony.xwork2.Action.*;
 import static javax.ws.rs.core.HttpHeaders.LOCATION;
 
 /**
 http post http://127.0.0.1:8080/blog/api/post/new?postText=trololo
  */
 
-@Result(type = "json")
+@Results({
+    @Result(type = "json"),
+    @Result(name = INPUT, type = "json"),
+    @Result(name = ERROR, type = "json", params = {
+        "errorCode", "-1",
+        "statusCode", "400",
+        "ignoreHierarchy", "false",
+        "includeProperties", ".*",
+    })
+})
+@ExceptionMappings({
+    @ExceptionMapping(
+        exception = "java.lang.Exception",
+        params = { "param1", "val1" },
+        result = SUCCESS
+    ),
+})
 @Namespace("/api/post")
 @ParentPackage("json-default")
 public class NewAction extends BaseRestAction {

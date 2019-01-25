@@ -5,8 +5,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.*;
 
-import static com.github.sigma.blog.domain.Post.FIND_ALL;
-import static com.github.sigma.blog.domain.Post.FIND_BY_ID;
+import static com.github.sigma.blog.domain.Post.*;
 import static java.util.Collections.unmodifiableList;
 
 @Stateless
@@ -37,8 +36,15 @@ public class PostRepository {
         return iterator.hasNext() ? iterator.next() : null;
     }
 
+    public Long count(UUID id) {
+        return em.createNamedQuery(COUNT, Long.class)
+                 .setParameter("id", id)
+                 .getSingleResult();
+    }
+
     public Post update(UUID id, String body) {
         Post updatedPost = findById(id);
+        if (null == updatedPost) return null;
         updatedPost.setBody(body);
         save(updatedPost);
         return updatedPost;

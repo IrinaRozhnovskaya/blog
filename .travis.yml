@@ -1,5 +1,5 @@
-#service:
-#- docker
+service:
+  - docker
 
 notifications:
   email: false
@@ -12,32 +12,38 @@ language: java
 jdk: oraclejdk8
 node_js: lts/*
 
-# addons:
-#   apt:
-#     packages:
-#       - sudo
-#       - lsof
-#       - wget
-#       - bash
-#       - curl
-#       - jq
-#       - libxml2-utils
-#       - unzip
-#       - docker-ce
-#       - python-pip
-#       - libappindicator1
-#       - fonts-liberation
-#       - google-chrome-stable
+addons:
+  apt:
+    packages:
+      - sudo
+      - lsof
+      - curl
+      - bash
+      - docker-ce
+      - python-pip
+      - libappindicator1
+      - fonts-liberation
+      - google-chrome-stable
 
 install: true
-# before_install:
-#   - export CHROME_BIN=/usr/bin/google-chrome
-#   - export DISPLAY=:99.0
-#   - sh -e /etc/init.d/xvfb start
-#   #
-#   - sudo pip install docker-compose httpie >/dev/null 2>&1
-#   - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
-#   - stop_any 80 5432 8002 8001
+before_install:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  #
+  - sudo pip install docker-compose httpie >/dev/null 2>&1
+  - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+  - stop_any 80 5432
 
 script:
-  - ./mvnw
+  - ./mvnw -pl :backend,:frontend
+  - ./mvnw -pl :docker -Pdocker docker-compose:up
+  #- docker-compose -f ./docker/src/main/docker/docker-compose.yaml logs -f -t &
+  - while [[ $(docker ps --quiet --last 2 --filter health=healthy | wc -l) -lt 2 ]] ; do
+      echo -ne '.' ; sleep 2s ;
+    done
+  - http post :8080/blog/api/
+  - http post :8080/blog/api/post/new?postText=trololo
+  - http post :8080/blog/api/post/all
+  - http post :8080/blog/api/post/one id=00000000-0000-0000-0000-000000000000                 || echo 'expected 400 HTTP status code.'
+  - http put :8080/blog/api/post/edit id=00000000-0000-0000-0000-000000000000 postText=ololo  || echo 'expected 400 HTTP status code.'

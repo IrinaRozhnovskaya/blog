@@ -15,21 +15,21 @@ import static com.opensymphony.xwork2.Action.*;
  */
 
 @Results({
-        @Result(type = "json"),
-        @Result(name = INPUT, type = "json"),
-        @Result(name = ERROR, type = "json", params = {
-                "statusCode", "404",
-                "errorCode", "404123",
-                "ignoreHierarchy", "false",
-                "includeProperties", ".*",
-        })
+    @Result(type = "json"),
+    @Result(name = INPUT, type = "json"),
+    @Result(name = ERROR, type = "json", params = {
+        "errorCode", "-1",
+        "statusCode", "400",
+        "ignoreHierarchy", "false",
+        "includeProperties", ".*",
+    })
 })
 @ExceptionMappings({
-        @ExceptionMapping(
-                exception = "java.lang.Exception",
-                params = { "param1", "val1" },
-                result = SUCCESS
-        ),
+    @ExceptionMapping(
+        exception = "java.lang.Exception",
+        params = { "param1", "val1" },
+        result = SUCCESS
+    ),
 })
 @ParentPackage("json-default")
 @InterceptorRef(value = "json")
@@ -60,10 +60,10 @@ public class EditAction extends BaseRestAction {
     }
 
     @Override
-    public String execute() throws Exception {
+    public String execute() {
         final UUID uuid = UUID.fromString(id);
-        response = postService.editOnePost(uuid, postText);
-        return SUCCESS;
+        response = saveOrUpdatePost(postService, uuid, id, postText);
+        return null == response ? ERROR : SUCCESS;
     }
 }
 

@@ -4,28 +4,22 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.*;
 
-import static com.github.sigma.blog.domain.Post.FIND_ALL;
-import static com.github.sigma.blog.domain.Post.FIND_BY_ID;
+import static com.github.sigma.blog.domain.Post.*;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @Table
 @NamedQueries({
+        @NamedQuery(name = COUNT, query = "SELECT COUNT(p) FROM Post p WHERE p.id = :id"),
         @NamedQuery(name = FIND_BY_ID, query = "SELECT p FROM Post p WHERE p.id = :id"),
         // requires Comparable to be implemented:
         @NamedQuery(name = FIND_ALL, query = "SELECT p FROM Post p ORDER BY p.updatedAt DESC"),
 })
-public class Post implements Comparable<Post>/*, Formattable*/ {
-/*
-    @Override
-    public void formatTo(Formatter formatter, int flags, int width, int precision) {
-        if (id == null) formatter.format("Post {}");
-        else formatter.format("Post {\"body\":\"" + body + "\"}");
-    }
-*/
+public class Post implements Comparable<Post> {
 
     public static final String FIND_ALL = "Post.findAll";
     public static final String FIND_BY_ID = "Post.findById";
+    public static final String COUNT = "Post.count";
 
     @Id
     @GeneratedValue(generator = "UUID2")

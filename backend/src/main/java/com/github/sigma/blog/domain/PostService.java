@@ -53,14 +53,18 @@ public class PostService implements Serializable {
         return unmodifiableList(result);
     }
 
-    public PostResponse findOnePost(UUID id) {
+    public PostResponse findOnePost(UUID id) throws PostNotFoundException {
         Post post = postRepository.findById(id);
         if (post == null) throw new PostNotFoundException(id);
         final PostResponse result = PostResponse.of(post);
         return result;
     }
 
-    public PostResponse editOnePost(UUID id, String body) {
+    public boolean isPostExists(UUID id) {
+        return postRepository.count(id) > 0;
+    }
+
+    public PostResponse editOnePost(UUID id, String body) throws PostNotFoundException {
         Post post = postRepository.update(id, body);
         if (post == null) throw new PostNotFoundException(id);
         final PostResponse result = PostResponse.of(post);
