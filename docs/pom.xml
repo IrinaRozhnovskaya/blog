@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <build>
+        <defaultGoal>clean generate-resources</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
