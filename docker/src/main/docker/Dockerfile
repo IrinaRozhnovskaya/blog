@@ -4,7 +4,7 @@ EXPOSE 5005
 HEALTHCHECK --timeout=1s --retries=66 \
         CMD wget -q --spider http://127.0.0.1:8080/blog/api/health \
          || exit 1
-ADD --chown=jboss ./docker/jboss-eap-6.4/modules/org/postgresql ${JBOSS_HOME}/modules/org/postgresql
-ADD --chown=jboss ./docker/jboss-eap-6.4/standalone/configuration/standalone.xml ${JBOSS_HOME}/standalone/configuration/standalone.xml
+ADD --chown=jboss ./docker/src/main/docker/jboss-eap-6.4/modules/org/postgresql ${JBOSS_HOME}/modules/org/postgresql
+ADD --chown=jboss ./docker/src/main/docker/jboss-eap-6.4/standalone/configuration/standalone.xml ${JBOSS_HOME}/standalone/configuration/standalone.xml
 ADD --chown=jboss ./backend/target/*.war ${JBOSS_HOME}/standalone/deployments/blog.war
 

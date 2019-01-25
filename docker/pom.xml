@@ -82,7 +82,7 @@
                         </executions>
                         <configuration>
                             <build>true</build>
-                            <composeFile>${project.basedir}/docker-compose.yaml</composeFile>
+                            <composeFile>${project.basedir}/src/main/docker/docker-compose.yaml</composeFile>
                             <detachedMode>true</detachedMode>
                             <removeImages>true</removeImages>
                             <removeImagesType>local</removeImagesType>
