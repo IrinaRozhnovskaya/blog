@@ -1,7 +1,6 @@
 package com.github.sigma.blog.actions.api;
 
 import com.github.sigma.blog.actions.Hateoas;
-import com.github.sigma.blog.actions.api.post.OneAction;
 import com.github.sigma.blog.domain.PostNotFoundException;
 import com.github.sigma.blog.domain.PostResponse;
 import com.github.sigma.blog.domain.PostService;
@@ -48,12 +47,13 @@ public abstract class BaseRestAction extends ActionSupport {
 
     @PostConstruct
     public void init() {
-        add_Links("_self       GET", "/api");
-        add_Links("health      GET", "/api/health");
-        add_Links("find all    GET", "/api/post/all");
-        add_Links("find one    GET", "/api/post/one");
-        add_Links("create new POST", "/api/post/new");
-        add_Links("update new  PUT", "/api/post/edit");
+        add_Links("      _self -    GET", "/api");
+        add_Links("     health -    GET", "/api/health");
+        add_Links("   find all -    GET", "/api/post/all");
+        add_Links(" create new -   POST", "/api/post/new?postText={markdown}");
+        add_Links("   find one -    GET", "/api/post/one?id={uuid}");
+        add_Links("update post -    PUT", "/api/post/edit?id={uuid}&postText={markdown}");
+        add_Links("remove post - DELETE", "/api/post/delete?id={uuid}");
     }
 
     private Map<String, Object> _links = new HashMap<>();

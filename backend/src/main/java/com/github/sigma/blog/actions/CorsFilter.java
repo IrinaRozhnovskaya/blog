@@ -1,7 +1,6 @@
 package com.github.sigma.blog.actions;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 // TODO: @WebFilter(urlPatterns = "/*")

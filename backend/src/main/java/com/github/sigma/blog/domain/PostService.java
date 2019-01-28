@@ -1,6 +1,5 @@
 package com.github.sigma.blog.domain;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -77,5 +76,9 @@ public class PostService implements Serializable {
         if (postText == null) return true;
         if (postText.trim().equals("")) return true;
         return false;
+    }
+
+    public void delete(String uuid) {
+        postRepository.delete(UUID.fromString(uuid));
     }
 }

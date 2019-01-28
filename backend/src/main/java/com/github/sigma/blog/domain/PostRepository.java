@@ -3,7 +3,9 @@ package com.github.sigma.blog.domain;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 import static com.github.sigma.blog.domain.Post.*;
 import static java.util.Collections.unmodifiableList;
@@ -48,5 +50,10 @@ public class PostRepository {
         updatedPost.setBody(body);
         save(updatedPost);
         return updatedPost;
+    }
+
+    public void delete(UUID id) {
+        Post post = findById(id);
+        em.remove(post);
     }
 }

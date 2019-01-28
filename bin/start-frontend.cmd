@@ -1,2 +1,2 @@
 @echo off
-call mvnw.cmd -f .\frontend\pom.xml -Pdev
+call mvnw.cmd -f .\frontend\pom.xml -P dev

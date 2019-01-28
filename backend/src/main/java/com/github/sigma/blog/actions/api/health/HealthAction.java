@@ -7,7 +7,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.json.annotations.JSON;
 
 import javax.enterprise.context.RequestScoped;
-import java.util.Map;
 
 @RequestScoped
 @Namespace("/api")

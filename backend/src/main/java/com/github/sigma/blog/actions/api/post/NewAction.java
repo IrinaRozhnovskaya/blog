@@ -2,9 +2,9 @@ package com.github.sigma.blog.actions.api.post;
 
 import com.github.sigma.blog.actions.Hateoas;
 import com.github.sigma.blog.actions.api.BaseRestAction;
-import com.github.sigma.blog.domain.PostService;
 import com.github.sigma.blog.domain.PostRequest;
 import com.github.sigma.blog.domain.PostResponse;
+import com.github.sigma.blog.domain.PostService;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.*;
 
@@ -18,7 +18,14 @@ import static com.opensymphony.xwork2.Action.*;
 import static javax.ws.rs.core.HttpHeaders.LOCATION;
 
 /**
-http post http://127.0.0.1:8080/blog/api/post/new?postText=trololo
+ * ```markdown
+ * # Hello World
+ * A blog
+ *
+ * _Let's get started!_
+ * ```
+ *
+ * http post :8080/blog/api/post/new^?postText=%23%20Hello%20World%21%0AA%20blog%0A%0A_Let%27s%20get%20started%21_
  */
 
 @Results({

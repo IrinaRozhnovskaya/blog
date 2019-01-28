@@ -1,8 +1,8 @@
 package com.github.sigma.blog.actions.api.post;
 
 import com.github.sigma.blog.actions.api.BaseRestAction;
-import com.github.sigma.blog.domain.PostService;
 import com.github.sigma.blog.domain.PostResponse;
+import com.github.sigma.blog.domain.PostService;
 import org.apache.struts2.convention.annotation.*;
 
 import javax.inject.Inject;

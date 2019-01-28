@@ -1,2 +1,2 @@
 @echo off
-mvnw -f .\docker\pom.xml -Pdocker -pl :docker docker-compose:down
+mvnw -f .\docker\pom.xml -P down

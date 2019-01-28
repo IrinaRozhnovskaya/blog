@@ -1,17 +1,18 @@
 package com.github.sigma.blog.actions.api.post;
 
 import com.github.sigma.blog.actions.api.BaseRestAction;
-import com.github.sigma.blog.domain.PostResponse;
 import com.github.sigma.blog.domain.PostService;
 import org.apache.struts2.convention.annotation.*;
 
 import javax.inject.Inject;
-import java.util.UUID;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import static com.opensymphony.xwork2.Action.*;
+import static java.util.logging.Level.INFO;
 
 /**
- * http post http://127.0.0.1:8080/blog/api/post/one id=88888888-4444-4444-4444-000000000000
+ * http delete :8080/blog/api/post/new^?postText=%23%20Hello%20World%21%0AA%20blog%0A%0A_Let%27s%20get%20started%21_
  */
 
 @Results({
@@ -31,31 +32,27 @@ import static com.opensymphony.xwork2.Action.*;
         result = SUCCESS
     ),
 })
+@Namespace("/api/post")
 @ParentPackage("json-default")
-@InterceptorRef(value = "json")
-@Namespace("/api/post") @Action("one")
-public class OneAction extends BaseRestAction {
+public class DeleteAction extends BaseRestAction {
+
+    static final Logger log = LogManager.getLogManager().getLogger(DeleteAction.class.getName());
 
     @Inject
     PostService postService;
 
-    /** 88888888-4444-4444-4444-000000000000 */
-    private String id;
+    String id;
 
-    public void setId(String id) {
+    public void setId(final String id) {
+        if (log.isLoggable(INFO)) log.info("deletion post with id: " + id);
         this.id = id;
     }
 
-    private PostResponse response;
-
-    public PostResponse getPostResponse() {
-        return response;
-    }
-
     @Override
+    @Action("delete")
     public String execute() {
-        final UUID uuid = UUID.fromString(id);
-        response = saveOrUpdatePost(postService, uuid, id, null);
-        return null == response ? ERROR : SUCCESS;
+        try { postService.delete(id); }
+        catch (Throwable e) { return ERROR; }
+        return SUCCESS;
     }
 }

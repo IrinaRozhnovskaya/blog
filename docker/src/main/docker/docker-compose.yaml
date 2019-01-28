@@ -2,7 +2,6 @@ version: '2.1'
 services:
   postgres:
     image: healthcheck/postgres:alpine
-    restart: unless-stopped
     ports: ["5432:5432"]
     environment:
       POSTGRES_DB: db
@@ -19,7 +18,6 @@ services:
     build:
       context: ../../../..
       dockerfile: ./docker/src/main/docker/Dockerfile
-    restart: unless-stopped
     ports:
       - '5005:5005'
       - '8080:8080'

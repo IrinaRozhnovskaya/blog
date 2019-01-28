@@ -3,13 +3,14 @@
     <!--<img alt="Vue logo" src="../assets/logo.png">-->
     <h1>Welcome to my {{ appName }}!</h1>
     <ul v-for="post in posts">
-      <Post :post="post" />
+      <Post :post="post"/>
     </ul>
   </div>
 </template>
 
 <script>
   import Post from './blog/Post';
+
   export default {
     name: 'Blog',
     data() {
@@ -26,12 +27,12 @@
     },
     methods: {
       fetchData() {
-/*
-        fetch('http://127.0.0.1:8080/blog/api/posts/all')
-          .then(domain => domain.json())
-          .then(json => JSON.parse(json))
-          .then(posts => this.posts = posts)
-*/
+        /*
+                fetch('http://127.0.0.1:8080/blog/api/posts/all')
+                  .then(domain => domain.json())
+                  .then(json => JSON.parse(json))
+                  .then(posts => this.posts = posts)
+        */
         this.posts = [
           {
             title: 'ololo',

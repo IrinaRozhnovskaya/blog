@@ -1,8 +1,11 @@
 package com.github.sigma.blog.domain;
 
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
 import static com.github.sigma.blog.domain.Post.*;
 import static javax.persistence.TemporalType.TIMESTAMP;
