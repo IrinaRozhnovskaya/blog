@@ -51,7 +51,7 @@ Returns location of created post.
 |*URL Params*
 |*Required:*
 
-`postText=[String]`
+`data=[String]`
 |*Data Params*
 |None
 
@@ -144,7 +144,7 @@ None
 |*Data Params*
 |`id=[UUID]`
 
-`postText=[String]`
+`data=[String]`
 |*Success Response*
 |*Code:* 200 OK
 

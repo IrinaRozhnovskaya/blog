@@ -3,20 +3,22 @@
 
 === Setup development environment
 
+TODO: Describe requirements and software to be installed (JDK, Docker, HTTPie etc...)
+
 === build, run and test with Docker
 
 [source,bash]
 ----
+mvnw -pl :backend & mvnw -pl docker -P up
 
-./mvnw ; ./mvnw -Pdocker docker-compose:up
+http    get :8080/blog/api
+http    get :8080/blog/api/posts/find-all
+http   post :8080/blog/api/posts/create     data=ololo
+http   post :8080/blog/api/posts/find-by-id id=00000000-0000-0000-0000-000000000000
+http    put :8080/blog/api/posts/update     id=00000000-0000-0000-0000-000000000000 data=trololo
+http delete :8080/blog/api/posts/delete     id=00000000-0000-0000-0000-000000000000
 
-http post :8080/blog/api/
-http post :8080/blog/api/post/new?postText=trololo
-http post :8080/blog/api/post/all
-http post :8080/blog/api/post/one id=00000000-0000-0000-0000-000000000000
-http put :8080/blog/api/post/edit id=00000000-0000-0000-0000-000000000000 postText=ololo
-
-./mvnw -Pdocker docker-compose:down
+mvnw -pl :docker -P down
 ----
 
 === Documentation
@@ -33,4 +35,3 @@ npm i -g serve
 serve public
 curl http://127.0.0.1:5000
 ----
-

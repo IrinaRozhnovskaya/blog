@@ -1,6 +1,6 @@
 package com.github.sigma.blog.actions.api.health;
 
-import com.github.sigma.blog.actions.api.BaseRestAction;
+import com.github.sigma.blog.actions.BaseRestResource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ExceptionMapping;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -10,7 +10,7 @@ import javax.enterprise.context.RequestScoped;
 
 @RequestScoped
 @Namespace("/api")
-public class HealthAction extends BaseRestAction {
+public class HealthResource extends BaseRestResource {
 
     String status = "DOWN";
 

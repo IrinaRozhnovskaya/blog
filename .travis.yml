@@ -42,8 +42,8 @@ script:
   - while [[ $(docker ps --quiet --last 2 --filter health=healthy | wc -l) -lt 2 ]] ; do
       echo -ne '.' ; sleep 2s ;
     done
-  - http post :8080/blog/api/
-  - http post :8080/blog/api/post/new?postText=trololo
-  - http post :8080/blog/api/post/all
-  - http post :8080/blog/api/post/one id=00000000-0000-0000-0000-000000000000                 || echo 'expected 400 HTTP status code.'
-  - http put :8080/blog/api/post/edit id=00000000-0000-0000-0000-000000000000 postText=ololo  || echo 'expected 400 HTTP status code.'
+  - http posts :8080/blog/api/
+  - http posts :8080/blog/api/posts/new?postText=trololo
+  - http posts :8080/blog/api/posts/all
+  - http posts :8080/blog/api/posts/one id=00000000-0000-0000-0000-000000000000                 || echo 'expected 400 HTTP status code.'
+  - http put :8080/blog/api/posts/edit id=00000000-0000-0000-0000-000000000000 postText=ololo  || echo 'expected 400 HTTP status code.'

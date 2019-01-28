@@ -1,19 +1,18 @@
 package com.github.sigma.blog.actions;
 
+import lombok.extern.java.Log;
+
 import javax.enterprise.inject.Default;
 import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
+@Log
 @Default
 public class Hateoas {
-
-    private static final Logger log = LogManager.getLogManager().getLogger(Hateoas.class.getName());
 
     public String linkTo(HttpServletRequest request, String... pathParts)  {
         URL url = parseUrl(request);
@@ -33,15 +32,15 @@ public class Hateoas {
     }
 
     /**
-     * Gets post location.
+     * Gets posts location.
      *
      * @param request not nullable {@link HttpServletRequest} instance.
-     * @param id non nullable post identifier.
-     * @return HTTP location to post.
+     * @param id non nullable posts identifier.
+     * @return HTTP location to posts.
      */
     public String getPostLocation(HttpServletRequest request, String id) {
         Objects.requireNonNull(request, "request may not be null.");
         Objects.requireNonNull(id, "id may not be null.");
-        return linkTo(request, "api", "post", "new", format("?id=%s", id));
+        return linkTo(request, "api", "v1", "posts", "create", format("id=%s", id));
     }
 }

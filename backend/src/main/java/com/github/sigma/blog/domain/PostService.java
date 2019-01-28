@@ -29,13 +29,13 @@ public class PostService implements Serializable {
     @Transactional
     public PostResponse save(final PostRequest sendPostRequest) {
         if (sendPostRequest == null) {
-            log.warning("sendPostRequest is null. exiting without saving post...");
+            log.warning("sendPostRequest is null. exiting without saving posts...");
             return null;
         }
 
         final String postText = sendPostRequest.getPostText();
         if (isNotNullOrBlank(postText)) {
-            log.warning("postText is null. exiting without saving post...");
+            log.warning("postText is null. exiting without saving posts...");
             return null;
         }
 
