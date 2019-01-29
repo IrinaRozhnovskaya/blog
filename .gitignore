@@ -25,5 +25,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-backend/src/main/webapp/*
-!backend/src/main/webapp/WEB-INF/beans.xml

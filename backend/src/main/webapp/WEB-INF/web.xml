@@ -1,0 +1,9 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!-- uncomment it to enable index.html page as fallback -->
+  <error-page>
+    <location>/index.html</location>
+  </error-page>
+</web-app>

@@ -15,8 +15,14 @@
     name: 'Blog',
     data() {
       return {
+        blogServiceBaseUrl: process.env.VUE_APP_BLOG_SERVICE_BASE_URL,
         appName: 'Blog',
-        posts: [],
+        posts: [
+          {
+            title: 'There are no posts available at the moment',
+            body: 'So I have got nothing to tell you, my friend...',
+          },
+        ],
       };
     },
     components: {
@@ -27,22 +33,9 @@
     },
     methods: {
       fetchData() {
-        /*
-                fetch('http://127.0.0.1:8080/blog/api/posts/all')
-                  .then(domain => domain.json())
-                  .then(json => JSON.parse(json))
-                  .then(posts => this.posts = posts)
-        */
-        this.posts = [
-          {
-            title: 'ololo',
-            body: 'trololo',
-          },
-          {
-            title: 'prived',
-            body: 'medved',
-          },
-        ];
+        fetch(`${this.blogServiceBaseUrl}/api/v1/posts/find-all`)
+          .then(data => data.json())
+          .then(posts => this.posts = posts)
       }
     }
   };
