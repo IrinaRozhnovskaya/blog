@@ -61,9 +61,9 @@ public abstract class BaseRestResource extends ActionSupport {
         add_Links(" _self           ", "/api");
         add_Links(" health status   ", "/api/health");
         add_Links(" find all posts  ", "/api/v1/posts/find-all");
-        add_Links(" create post     ", "/api/v1/posts/create     data={markdown}");
+        add_Links(" create post     ", "/api/v1/posts/create     title={markdown} body={markdown}");
         add_Links(" find post by id ", "/api/v1/posts/find-by-id id={uuid}");
-        add_Links(" update posts    ", "/api/v1/posts/update     id={uuid} data={markdown}");
+        add_Links(" update posts    ", "/api/v1/posts/update     id={uuid} title={markdown} body={markdown}");
         add_Links(" remove posts    ", "/api/v1/posts/delete     id={uuid}");
     }
 
@@ -73,22 +73,5 @@ public abstract class BaseRestResource extends ActionSupport {
     protected void add_Links(String key, String value) {
         final HttpServletRequest request = ServletActionContext.getRequest();
         predefinedLinks.put(key, hateoas.linkTo(request, value));
-    }
-
-    protected PostResponse saveOrUpdatePost(PostService postService, UUID uuid, String id, String data) {
-        try {
-            return null == data
-                ? postService.findOnePost(uuid)
-                : postService.editOnePost(uuid, data);
-        }
-        catch (PostNotFoundException e) {
-            addActionError(format("Post with id '%s' wasn't found: '%s'", id, e.getLocalizedMessage()));
-            return null;
-        }
-        catch (Throwable e) {
-            addActionError(format("Unexpected error: '%s'", e.getLocalizedMessage()));
-            log.severe(e.getLocalizedMessage());
-            throw new RuntimeException(e);
-        }
     }
 }

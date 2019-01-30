@@ -28,7 +28,7 @@ import static javax.ws.rs.core.HttpHeaders.LOCATION;
  * _Let's get started!_
  * ```
  *
- * http posts :8080/blog/api/posts/new data="%23%20Hello%20World%21%0AA%20blog%0A%0A_Let%27s%20get%20started%21_"
+ * http post :8080/blog/api/v1/posts/create title=title body="%23%20Hello%20World%21%0AA%20blog%0A%0A_Let%27s%20get%20started%21_"
  */
 
 @Namespaces({
@@ -50,12 +50,13 @@ public class CreatePostResource extends BaseRestResource {
     @Inject
     PostService postService;
 
-    @Setter String data;
+    @Setter String title;
+    @Setter String body;
     @Getter PostResponse created;
 
     @Action("create")
     public String create() {
-        final PostRequest payload = PostRequest.of(data);
+        final PostRequest payload = PostRequest.of(title, body);
         created = postService.save(payload);
         final HttpServletRequest request = ServletActionContext.getRequest();
         final String location = hateoas.getPostLocation(request, created.getId());

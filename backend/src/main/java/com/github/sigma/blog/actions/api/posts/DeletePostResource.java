@@ -14,7 +14,7 @@ import static com.opensymphony.xwork2.Action.INPUT;
 import static java.lang.String.format;
 
 /**
- * http delete :8080/blog/api/posts/delete id=88888888-4444-4444-4444-000000000000
+ * http delete :8080/blog/api/v1/posts/delete id=88888888-4444-4444-4444-000000000000
  */
 
 @Namespaces({
