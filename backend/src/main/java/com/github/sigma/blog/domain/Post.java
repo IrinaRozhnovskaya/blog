@@ -1,22 +1,25 @@
 package com.github.sigma.blog.domain;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
 
 import static com.github.sigma.blog.domain.Post.*;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
+@Data
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table
 @NamedQueries({
         @NamedQuery(name = COUNT, query = "SELECT COUNT(p) FROM Post p WHERE p.id = :id"),
         @NamedQuery(name = FIND_BY_ID, query = "SELECT p FROM Post p WHERE p.id = :id"),
         // requires Comparable to be implemented:
-        @NamedQuery(name = FIND_ALL, query = "SELECT p FROM Post p ORDER BY p.updatedAt DESC"),
+        @NamedQuery(name = FIND_ALL, query = "SELECT p FROM Post p ORDER BY p.lastModifiedAt DESC"),
 })
 public class Post implements Comparable<Post> {
 
@@ -25,93 +28,44 @@ public class Post implements Comparable<Post> {
     public static final String COUNT = "Post.count";
 
     @Id
+    @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(generator = "UUID2")
     @GenericGenerator(name = "UUID2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    protected UUID id;
 
-    @Column
+    @Column(nullable = false)
+    private String title;
+
+    @Lob
+    @Column(nullable = false)
     private String body;
 
     @Temporal(TIMESTAMP)
-    @Column(name = "created")
-    private Date createdAt;
+    @Column(name = "created", nullable = false)
+    private Date lastModifiedAt;
 
-    @Temporal(TIMESTAMP)
-    @Column(name = "updated")
-    private Date updatedAt;
-
-    protected Post() {}
-
-    public Post(final UUID id, final String body, final Date createdAt, final Date updatedAt) {
-        Objects.requireNonNull(id, "id may not be null.");
-        Objects.requireNonNull(body, "body may not be null.");
-        Objects.requireNonNull(createdAt, "createdAt may not be null.");
-        Objects.requireNonNull(updatedAt, "updatedAt may not be null.");
-        this.id = id;
-        this.body = body;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Post(final String body) {
+    public Post(final String title, final String body) {
+        this.title = title;
         this.body = body;
     }
 
     @Override
     public int compareTo(final Post other) {
-        return -this.updatedAt.compareTo(other.getCreatedAt());
-    }
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id='" + id + '\'' +
-                "body='" + body + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return -this.lastModifiedAt.compareTo(other.getLastModifiedAt());
     }
 
     @PrePersist
     public void onCreate() {
         final long time = new Date().getTime();
-        createdAt = new Date(time);
-        updatedAt = new Date(time);
+        lastModifiedAt = new Date(time);
     }
 
     @PreUpdate
     public void onMerge() {
-        updatedAt = new Date();
+        lastModifiedAt = new Date();
     }
 
     public boolean isNew() {
         return id == null;
-    }
-
-    protected void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public UUID getId() {
-        return id;
     }
 }

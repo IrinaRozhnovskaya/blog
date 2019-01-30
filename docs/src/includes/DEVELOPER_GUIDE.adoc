@@ -12,11 +12,11 @@ TODO: Describe requirements and software to be installed (JDK, Docker, HTTPie et
 mvnw -pl :backend & mvnw -pl docker -P up
 
 http    get :8080/blog/api
-http    get :8080/blog/api/posts/find-all
-http   post :8080/blog/api/posts/create     data=ololo
-http   post :8080/blog/api/posts/find-by-id id=00000000-0000-0000-0000-000000000000
-http    put :8080/blog/api/posts/update     id=00000000-0000-0000-0000-000000000000 data=trololo
-http delete :8080/blog/api/posts/delete     id=00000000-0000-0000-0000-000000000000
+http    get :8080/blog/api/v1/posts/find-all
+http   post :8080/blog/api/v1/posts/create     title=title body=ololo
+http   post :8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
+http    put :8080/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
+http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000
 
 mvnw -pl :docker -P down
 ----

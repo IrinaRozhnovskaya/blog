@@ -44,9 +44,10 @@ public class PostRepository {
                  .getSingleResult();
     }
 
-    public Post update(UUID id, String body) {
+    public Post update(UUID id, String title, String body) {
         Post updatedPost = findById(id);
         if (null == updatedPost) return null;
+        updatedPost.setTitle(title);
         updatedPost.setBody(body);
         save(updatedPost);
         return updatedPost;

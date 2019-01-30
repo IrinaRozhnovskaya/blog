@@ -1,6 +1,7 @@
 package com.github.sigma.blog.actions.api.posts;
 
 import com.github.sigma.blog.actions.BaseRestResource;
+import com.github.sigma.blog.domain.PostNotFoundException;
 import com.github.sigma.blog.domain.PostResponse;
 import com.github.sigma.blog.domain.PostService;
 import lombok.Getter;
@@ -12,9 +13,10 @@ import java.util.UUID;
 
 import static com.github.sigma.blog.actions.BaseRestResource.Constants.*;
 import static com.opensymphony.xwork2.Action.*;
+import static java.lang.String.format;
 
 /**
- * http posts http://127.0.0.1:8080/blog/api/post/one id=88888888-4444-4444-4444-000000000000
+ * http post http://127.0.0.1:8080/blog/api/v1/posts/find-by-id id=88888888-4444-4444-4444-000000000000
  */
 
 @Namespaces({
@@ -48,7 +50,15 @@ public class FindPostByIdResource extends BaseRestResource {
     @Action("find-by-id")
     public String execute() {
         final UUID uuid = UUID.fromString(id);
-        post = saveOrUpdatePost(postService, uuid, id, null);
-        return null == post ? ERROR : SUCCESS;
+        try {post = postService.findOnePost(uuid);}
+        catch (PostNotFoundException e) {
+            addActionError(format("Post with id '%s' wasn't found: '%s'", id, e.getLocalizedMessage()));
+            return ERROR;
+        }
+        catch (Throwable e) {
+            addActionError(format("Unexpected error: '%s'", e.getLocalizedMessage()));
+            throw new RuntimeException(e);
+        }
+        return SUCCESS;
     }
 }

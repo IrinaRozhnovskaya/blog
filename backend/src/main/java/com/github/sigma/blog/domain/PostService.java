@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
 import static java.util.Collections.unmodifiableList;
 
 @ApplicationScoped
@@ -20,12 +21,6 @@ public class PostService implements Serializable {
     @Inject
     PostRepository postRepository;
 
-//    @PostConstruct
-//    public void initTestData() {
-//        final PostRequest request = PostRequest.of("ololo");
-//        save(request);
-//    }
-
     @Transactional
     public PostResponse save(final PostRequest sendPostRequest) {
         if (sendPostRequest == null) {
@@ -33,13 +28,19 @@ public class PostService implements Serializable {
             return null;
         }
 
-        final String postText = sendPostRequest.getPostText();
-        if (isNotNullOrBlank(postText)) {
-            log.warning("postText is null. exiting without saving posts...");
+        final String body = sendPostRequest.getBody();
+        if (isNotNullOrBlank(body)) {
+            log.warning("body is null. exiting without saving posts...");
             return null;
         }
 
-        final Post savedPost = postRepository.save(new Post(postText));
+        final String title= sendPostRequest.getTitle();
+        if (isNotNullOrBlank(title)) {
+            log.warning("title is null. exiting without saving posts...");
+            return null;
+        }
+
+        final Post savedPost = postRepository.save(new Post(title, body));
         return PostResponse.of(savedPost);
     }
 
@@ -63,11 +64,15 @@ public class PostService implements Serializable {
         return postRepository.count(id) > 0;
     }
 
-    public PostResponse editOnePost(UUID id, String body) throws PostNotFoundException {
-        Post post = postRepository.update(id, body);
+    public PostResponse editOnePost(UUID id, String title, String body) throws PostNotFoundException {
+        Post post = postRepository.update(id, title, body);
         if (post == null) throw new PostNotFoundException(id);
         final PostResponse result = PostResponse.of(post);
         return result;
+    }
+
+    public void delete(String uuid) {
+        postRepository.delete(UUID.fromString(uuid));
     }
 
     /* Helpers */
@@ -78,7 +83,4 @@ public class PostService implements Serializable {
         return false;
     }
 
-    public void delete(String uuid) {
-        postRepository.delete(UUID.fromString(uuid));
-    }
 }
