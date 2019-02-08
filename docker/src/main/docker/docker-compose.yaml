@@ -22,6 +22,7 @@ services:
       - '5005:5005'
       - '8080:8080'
       - '9990:9990'
+      - '9999:9999'
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: sa
