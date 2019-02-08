@@ -1,6 +1,6 @@
 FROM daggerok/jboss-eap-6.4:6.4.21-alpine
 RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -Djboss.bind.address=0.0.0.0 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005\"" >> ${JBOSS_HOME}/bin/standalone.conf
-EXPOSE 5005
+EXPOSE 5005 9990 9999
 HEALTHCHECK --timeout=1s --retries=66 \
         CMD wget -q --spider http://127.0.0.1:8080/blog/api/health \
          || exit 1
