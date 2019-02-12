@@ -1,8 +1,7 @@
 package com.github.sigma.blog.domain;
 
 import com.github.sigma.blog.StrutsApplication;
-import org.assertj.core.api.AbstractCharSequenceAssert;
-import org.assertj.core.api.Assertions;
+import lombok.extern.java.Log;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
@@ -10,26 +9,22 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import java.io.File;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional
+@Log
 @RunWith(Arquillian.class)
-public class PostServiceTest {
-
-    @Inject
-    PostService postService;
-
-    @Inject
-    PostRepository postRepository;
+public class RestClientIntegrationTest {
 
     @Deployment
     @OverProtocol("Servlet 3.0")
@@ -48,19 +43,18 @@ public class PostServiceTest {
                 .addAsLibraries(libs);
     }
 
-    @Before
-    public void testData() {
-        // given:
-        assertThat(postRepository.getAll()).isEmpty();
-        // when:
-        postService.save(PostRequest.of("title", "body"));
-    }
+    final static Client restClient = ClientBuilder.newClient();
+    final static WebTarget rootApi = restClient.target("http://127.0.0.1:8080/blog/api/v1");
 
     @Test
-    public void savePost() {
-        // then:
-        assertThat(postRepository.getAll()).isNotEmpty();
-        // and:
-        assertThat(postRepository.getAll().size()).isEqualTo(1);
+    public void test() {
+        final Map map = jsonBuilder("/").get(Map.class);
+        log.info("map: " + map.toString());
+        assertThat(map).isNotEmpty();
+    }
+
+    private Builder jsonBuilder(String path) {
+        final WebTarget webTarget = rootApi.path(path);
+        return webTarget.request(MediaType.APPLICATION_JSON);
     }
 }

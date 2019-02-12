@@ -1,8 +1,5 @@
 package com.github.sigma.blog.actions;
 
-import com.github.sigma.blog.domain.PostNotFoundException;
-import com.github.sigma.blog.domain.PostResponse;
-import com.github.sigma.blog.domain.PostService;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Getter;
 import lombok.extern.java.Log;
@@ -14,11 +11,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.github.sigma.blog.actions.BaseRestResource.Constants.*;
 import static com.opensymphony.xwork2.Action.*;
-import static java.lang.String.format;
 
 @Log
 @Results({
