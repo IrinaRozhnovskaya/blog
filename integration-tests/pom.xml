@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>blog</artifactId>
+        <groupId>com.github.sigma</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>integration-tests</artifactId>
+
+    <properties>
+        <!-- why??? https://stackoverflow.com/questions/44088493/jersey-stopped-working-with-injectionmanagerfactory-not-found -->
+        <jersey.version>2.26-b03</jersey.version>
+    </properties>
+
+    <dependencies>
+        <!-- in java we trust -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${jersey.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.23.0</version>
+            <scope>test</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>2.9.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                    <configuration>
+                        <!--<includes>
+                            <include>**/*Test.java</include>
+                        </includes>-->
+                        <excludes>
+                            <exclude>**/*IT.java</exclude>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                            <exclude>**/*IntegrationTests.java</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                            <phase>integration-test</phase>
+                            <configuration>
+                                <excludes>
+                                    <exclude>none</exclude>
+                                    <!--<exclude>**/*Test.java</exclude>-->
+                                </excludes>
+                                <includes>
+                                    <include>**/*IT.java</include>
+                                    <include>**/*IntegrationTest.java</include>
+                                    <include>**/*IntegrationTests.java</include>
+                                </includes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>it</id>
+            <build>
+                <defaultGoal>integration-test</defaultGoal>
+            </build>
+        </profile>
+
+        <profile>
+            <id>ci</id>
+            <build>
+                <!--<defaultGoal>package integration-test</defaultGoal>-->
+                <defaultGoal>package integration-test docker-compose:down</defaultGoal>
+                <!-- docker-compose:up goal will be executed automatically before integration tests -->
+                <plugins>
+                    <plugin>
+                        <groupId>com.dkanejs.maven.plugins</groupId>
+                        <artifactId>docker-compose-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.dkanejs.maven.plugins</groupId>
+                            <artifactId>docker-compose-maven-plugin</artifactId>
+                            <version>2.3.0</version>
+                            <executions>
+                                <execution>
+                                    <id>up</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>up</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>down</id>
+                                    <phase>post-integration-test</phase>
+                                    <goals>
+                                        <goal>down</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <build>true</build>
+                                <composeFile>${project.basedir}/../docker/src/main/docker/docker-compose-ci.yaml</composeFile>
+                                <detachedMode>true</detachedMode>
+                                <removeImages>true</removeImages>
+                                <removeImagesType>local</removeImagesType>
+                                <removeOrphans>true</removeOrphans>
+                                <removeVolumes>true</removeVolumes>
+                                <!--<verbose>true</verbose>-->
+                                <detail>true</detail>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>glassfish-repository</id>
+            <url>https://maven.java.net/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>jboss-repository</id>
+            <url>http://repo.spring.io/plugins-release/</url>
+        </repository>
+    </repositories>
+
+</project>

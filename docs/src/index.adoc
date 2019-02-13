@@ -17,4 +17,4 @@ endif::backend-html5[]
 
 include::./includes/DEVELOPER_GUIDE.adoc[]
 include::./includes/REST_API_DOCUMENTATION.adoc[]
-
+include::./includes/TESTING.adoc[]

@@ -26,7 +26,7 @@
         <module>backend</module>
         <module>docs</module>
         <module>docker</module>
-        <!--<module>arquillian-tests</module>-->
+        <module>integration-tests</module>
     </modules>
 
     <build>

@@ -19,6 +19,7 @@
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.7.1</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
@@ -74,7 +75,7 @@
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                         </configuration>
                     </execution>
-                    <execution>
+                    <!--<execution>
                         <id>output-docbook</id>
                         <phase>generate-resources</phase>
                         <goals>
@@ -102,7 +103,7 @@
                                 <pagenums/>
                             </attributes>
                         </configuration>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
         </plugins>

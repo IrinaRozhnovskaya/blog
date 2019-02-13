@@ -1,0 +1,49 @@
+version: '2.1'
+services:
+  postgres:
+    image: healthcheck/postgres:alpine
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: sa
+    networks:
+      my-blog.com:
+        aliases:
+          - db.my-blog.com
+  jboss:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    build:
+      context: ../../../..
+      dockerfile: ./docker/src/main/docker/Dockerfile
+    volumes: ['jboss-data:/home/jboss/jboss-eap-6.4']
+    ports:
+      - '5005:5005'
+      - '8080:8080'
+      - '9990:9990'
+      - '9999:9999'
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: sa
+      POSTGRES_HOST: db.my-blog.com
+    networks:
+      my-blog.com:
+        aliases:
+          - blog.my-blog.com
+          - jboss.my-blog.com
+  healthcheck:
+    image: busybox
+    depends_on:
+      postgres:
+        condition: service_healthy
+      jboss:
+        condition: service_healthy
+    command: echo "ready."
+networks:
+  my-blog.com:
+    driver: bridge
+volumes:
+  jboss-data: {}
