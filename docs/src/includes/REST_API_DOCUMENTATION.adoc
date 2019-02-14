@@ -26,12 +26,13 @@ None
 
 *Content:* ``{
                "links": {
-                      "_self        GET": "http://localhost:8080/blog/api",
-                   "create new: POST": "http://localhost:8080/blog/api/post/new",
-                   "find all     GET": "http://localhost:8080/blog/api/post/all",
-                   "find one     GET": "http://localhost:8080/blog/api/post/one",
-                   "health       GET": "http://localhost:8080/blog/api/health",
-                   "update new:  PUT": "http://localhost:8080/blog/api/post/edit"
+                   "_self           GET": "http://localhost:8080/blog/api",
+                   "create post:       POST": "http://localhost:8080/blog/api/v1/posts/create",
+                   "find all posts     GET": "http://localhost:8080/blog/api/v1/posts/find-all",
+                   "find post by id    GET": "http://localhost:8080/blog/api/v1/posts/find-by-id",
+                   "health status      GET": "http://localhost:8080/blog/api/health",
+                   "update posts:      PUT": "http://localhost:8080/blog/api/v1/posts/update"
+                   "remove posts:      PUT": "http://localhost:8080/blog/api/v1/posts/delete"
                }
            } ``
 |===
