@@ -134,57 +134,6 @@
                 <defaultGoal>integration-test</defaultGoal>
             </build>
         </profile>
-
-        <profile>
-            <id>ci</id>
-            <build>
-                <!--<defaultGoal>package integration-test</defaultGoal>-->
-                <defaultGoal>package integration-test docker-compose:down</defaultGoal>
-                <!-- docker-compose:up goal will be executed automatically before integration tests -->
-                <plugins>
-                    <plugin>
-                        <groupId>com.dkanejs.maven.plugins</groupId>
-                        <artifactId>docker-compose-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.dkanejs.maven.plugins</groupId>
-                            <artifactId>docker-compose-maven-plugin</artifactId>
-                            <version>2.3.0</version>
-                            <executions>
-                                <execution>
-                                    <id>up</id>
-                                    <phase>pre-integration-test</phase>
-                                    <goals>
-                                        <goal>up</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>down</id>
-                                    <phase>post-integration-test</phase>
-                                    <goals>
-                                        <goal>down</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <build>true</build>
-                                <composeFile>${project.basedir}/../docker/src/main/docker/docker-compose-ci.yaml</composeFile>
-                                <detachedMode>true</detachedMode>
-                                <removeImages>true</removeImages>
-                                <removeImagesType>local</removeImagesType>
-                                <removeOrphans>true</removeOrphans>
-                                <removeVolumes>true</removeVolumes>
-                                <!--<verbose>true</verbose>-->
-                                <detail>true</detail>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
     </profiles>
 
     <repositories>
