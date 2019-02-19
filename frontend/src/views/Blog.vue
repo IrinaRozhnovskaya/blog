@@ -36,8 +36,8 @@
         fetch(`${this.blogServiceBaseUrl}/api/v1/posts/find-all`)
           .then(data => data.json())
           .then(posts => this.posts = posts)
-      }
-    }
+      },
+    },
   };
 </script>
 

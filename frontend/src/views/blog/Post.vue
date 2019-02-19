@@ -1,11 +1,12 @@
 <template>
   <div class="post">
-    <h2>{{ post.title }}!</h2>
-    <div>{{ post.body }}</div>
+    <div v-html="render(post.body)"/>
   </div>
 </template>
 
 <script>
+  import MarkdownIt from 'markdown-it';
+  const md = new MarkdownIt({ html: true });
   export default {
     name: 'Post',
     props: {
@@ -14,6 +15,11 @@
         body: 'Body is undefined',
       }
     },
+    methods: {
+      render(markdown) {
+        return md.render(markdown);
+      },
+    },
   };
 </script>
 
@@ -21,4 +27,5 @@
   ul {
     list-style: none;
   }
+
 </style>
