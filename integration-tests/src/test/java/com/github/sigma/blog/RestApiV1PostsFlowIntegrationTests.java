@@ -32,7 +32,6 @@ public class RestApiV1PostsFlowIntegrationTests {
 
     final static WebTarget rootApi = restClient.target("http://127.0.0.1:8080/blog/api/v1");
 
-    int initalSize = 0;
     UUID uuid = null;
 
     @Test
@@ -54,11 +53,11 @@ public class RestApiV1PostsFlowIntegrationTests {
     private void should_find_all_posts(){
         final Collection findAllResponse = jsonBuilder("/posts/find-all").get(Collection.class);
         log.info("findAllResponse: {}", findAllResponse.toString());
-        int initalSize = findAllResponse.size();
-        assertThat(findAllResponse).size().isEqualTo(initalSize);
+        int initialSize = findAllResponse.size();
+        assertThat(findAllResponse).size().isEqualTo(initialSize);
     }
 
-    private HashMap  should_create_new_post_method_returns_created_post(){
+    private HashMap should_create_new_post_method_returns_created_post(){
         final Response createPostResponse = jsonBuilder("/posts/create").post(createPostEntity());
         log.info("createPostResponse: {}", createPostResponse);
 
@@ -97,7 +96,6 @@ public class RestApiV1PostsFlowIntegrationTests {
     }
 
     private void should_update_created_post_method_returns_updated_post(){
-        HashMap post = should_create_new_post_method_returns_created_post();
         final Response updatePostResponse = jsonBuilder("/posts/update").put(updatePostEntity());
         log.info("updatePostResponse: {}", updatePostResponse);
 
