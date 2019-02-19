@@ -41,9 +41,10 @@ script:
 #  - http    get 0.0.0.0:8080/blog/index.html
 #  - http    get 0.0.0.0:8080/blog/api
 #  - http    get 0.0.0.0:8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000            || echo 'expected 400 HTTP status code.'
-#  - http   post 0.0.0.0:8080/blog/api/v1/posts/create data="# trololo"
+#  - http   post 0.0.0.0:8080/blog/api/v1/posts/create title="# title" body="# trololo"
 #  - http    get 0.0.0.0:8080/blog/api/v1/posts/find-all
-#  - http    put 0.0.0.0:8080/blog/api/v1/posts/update id=00000000-0000-0000-0000-000000000000 data="# ololo" || echo 'expected 400 HTTP status code.'
+#  - http    put 0.0.0.0:8080/blog/api/v1/posts/update id=00000000-0000-0000-0000-000000000000 title="title" body
+  ="# ololo" || echo 'expected 400 HTTP status code.'
 #  - http delete 0.0.0.0:8080/blog/api/v1/posts/delete id=00000000-0000-0000-0000-000000000000                || echo 'expected 400 HTTP status code.'
   - ./mvnw -pl :backend,:frontend >/dev/null
   - ./mvnw -f docker/pom.xml -P ci-up

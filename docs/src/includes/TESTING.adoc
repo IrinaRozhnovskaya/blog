@@ -4,7 +4,7 @@
 .important! To successfully query JSON arrays, you  have to use jackson mapper and properly configure JAX-RS client:
 [source,java]
 ----
-include::../../../integration-tests/src/test/java/com/github/sigma/blog/RestApiTests.java[tags=jackson]
+include::../../../integration-tests/src/test/java/com/github/sigma/blog/RestApiV1PostsFlowIntegrationTests.java[tags=jackson]
 ----
 
 read more link:https://stackoverflow.com/questions/14588727/can-not-deserialize-instance-of-java-util-arraylist-out-of-value-string[here]
