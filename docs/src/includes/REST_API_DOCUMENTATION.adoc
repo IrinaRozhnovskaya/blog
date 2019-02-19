@@ -26,13 +26,13 @@ None
 
 *Content:* ``{
                "links": {
-                   "_self           GET": "http://localhost:8080/blog/api",
-                   "create post:       POST": "http://localhost:8080/blog/api/v1/posts/create",
-                   "find all posts     GET": "http://localhost:8080/blog/api/v1/posts/find-all",
-                   "find post by id    GET": "http://localhost:8080/blog/api/v1/posts/find-by-id",
-                   "health status      GET": "http://localhost:8080/blog/api/health",
-                   "update posts:      PUT": "http://localhost:8080/blog/api/v1/posts/update"
-                   "remove posts:      PUT": "http://localhost:8080/blog/api/v1/posts/delete"
+                   "_self              ": "http://localhost:8080/blog/api",
+                   "create post:       ": "http://localhost:8080/blog/api/v1/posts/create  title={markdown} body={markdown}",
+                   "find all posts     ": "http://localhost:8080/blog/api/v1/posts/find-all",
+                   "find post by id    ": "http://localhost:8080/blog/api/v1/posts/find-by-id id={uuid}",
+                   "health status      ": "http://localhost:8080/blog/api/health",
+                   "update posts:      ": "http://localhost:8080/blog/api/v1/posts/update id={uuid}"
+                   "remove posts:      ": "http://localhost:8080/blog/api/v1/posts/delete id={uuid} title={markdown} body={markdown}"
                }
            } ``
 |===
@@ -44,7 +44,7 @@ None
 Returns location of created post.
 
 |*URL*
-| `/api/post/new`
+| `/api/v1/posts/create`
 
 |*Method*
 |`POST`
@@ -52,16 +52,17 @@ Returns location of created post.
 |*URL Params*
 |*Required:*
 
-`data=[String]`
-|*Data Params*
 |None
+|*Data Params*
+
+`title=[String]  body=[String]`
 
 |*Success Response*
 |*Code:* 201 Created
 
 *Content:* ``{} ``
 
-*Location:* `/blog/api/post/new/api/post/new?id=:id`
+*Location:* `/blogapiv1postscreateid=:id`
 |===
 
 === Show all posts
@@ -73,7 +74,7 @@ Returns json data of all posts.
 
 
 |*URL*
-| `/api/post/all`
+| `/api/v1/posts/find-all`
 
 |*Method*
 |`GET/POST`
@@ -87,10 +88,15 @@ None
 |*Success Response*
 |*Code:* 200 OK
 
-*Content:* ``{"post":
+*Content:*
 [
-{"body":"trololo","id":"9b4366bd-e0e6-4c0b-b46a-4329efadd5a1","when":"2019.01.18 15:57 GMT"},{"body":"ololo","id":"d9252cb6-88e8-4a92-831e-745241ffe3f7","when":"2019.01.18 15:00 GMT"}]} ``
-
+    {
+        "body": "ololo",
+        "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+        "lastModifiedAt": "2019.02.15 15:30 GMT",
+        "title": "title"
+    }
+]
 |===
 === Show one post
 [cols="30%,70%"]
@@ -99,9 +105,8 @@ None
 
 Returns json data of one post.
 
-
 |*URL*
-| `/api/post/one`
+| `/api/v1/posts/find-by-id`
 
 |*Method*
 |`GET/POST`
@@ -117,15 +122,14 @@ None
 
 *Content:* ``
 {
-    "postResponse": {
-        "body": "trololo",
-        "id": "5e48ee43-d428-4bbe-bcbc-0d860ca96e63",
-        "when": "2019.01.18 13:25 GMT"
-    }
+    "body": "ololo",
+    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+    "lastModifiedAt": "2019.02.15 15:30 GMT",
+    "title": "title"
 }
  ``
 |===
-=== Edit one post
+=== Edit post
 [cols="30%,70%"]
 |===
 |*Title* |*Show one edited post*
@@ -133,7 +137,7 @@ None
 Returns json data of one edited post.
 
 |*URL*
-| `/api/post/edit`
+| `/api/v1/posts/update`
 
 |*Method*
 |`PUT`
@@ -145,17 +149,44 @@ None
 |*Data Params*
 |`id=[UUID]`
 
-`data=[String]`
+`title=[String] body=[String]`
 |*Success Response*
 |*Code:* 200 OK
 
 *Content:* ``
 {
-    "postResponse": {
-        "body": "editedOlolo",
-        "id": "4e103103-9d5a-42ec-873a-58f1bed6ef44",
-        "when": "2019.01.18 13:27 GMT"
-    }
+    "body": "trololo",
+    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+    "lastModifiedAt": "2019.02.15 15:58 GMT",
+    "title": "title"
+}
+ ``
+|===
+=== Delete post
+[cols="30%,70%"]
+|===
+|*Title* |*Show one post*
+
+Returns json data of one post.
+
+|*URL*
+| `/api/v1/posts/delete`
+
+|*Method*
+|`DELETE`
+
+|*URL Params*
+|*Required:*
+
+None
+|*Data Params*
+|`id=[UUID]`
+|*Success Response*
+|*Code:* 200 OK
+
+*Content:* ``
+{
+    "message": "Post with id '674b289d-1f3f-4285-beef-79e27772b3e6' was removed."
 }
  ``
 |===
