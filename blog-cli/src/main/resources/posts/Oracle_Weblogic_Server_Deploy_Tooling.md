@@ -1,8 +1,8 @@
-# Oracle WebLogic Server Deploy Tooling
+## Oracle WebLogic Server Deploy Tooling
 
 Many organizations are using WebLogic Server, with or without other Oracle Fusion Middleware components, to run their enterprise applications.  As more and more organizations move toward Continuous Delivery of their applications, the importance of automated testing grows.  Automating WebLogic Server domain creation and application deployment with hand-coded WLST scripts is challenging.  After those scripts exist for a project, they must be maintained as the project evolves.  The motivation for the Oracle WebLogic Server Deploy Tooling project is to remove the need for most users to write WLST scripts for routine domain creation and application deployment tasks.  Instead, the project team can write a declarative, metadata model describing the domain and applications (with their dependent resources), and use one or more of the single-purpose tools provided that perform domain lifecycle operations based on the content of the model.  The goal is to make it easy to stand up environments and perform domain lifecycle operations in a repeatable fashion based on a metadata model that can be treated as source and evolve as the project evolves.
 
-## Table of Contents
+### Table of Contents
 - [Features](#features-of-the-oracle-weblogic-server-deploy-tooling)
     - [Create Domain Tool](site/create.md)
     - [Update Domain Tool](site/update.md)
@@ -20,7 +20,7 @@ Many organizations are using WebLogic Server, with or without other Oracle Fusio
     - [Model Filters](site/tool_filters.md)
 - [Downloading and Installing](#downloading-and-installing-the-software)
 
-## Features of the Oracle WebLogic Server Deploy Tooling
+### Features of the Oracle WebLogic Server Deploy Tooling
 
 The Oracle WebLogic Server Deploy Tooling is designed to support a wide range of WebLogic Server versions.  Testing has been done with versions ranging from WebLogic Server 10.3.3 to the very latest version 12.2.1.3 (and beyond).  This is possible because the underlying framework, upon which the tools are built, embeds a knowledge base that encodes information about WLST folders and attributes, making it possible for the tooling to know:
 
@@ -44,7 +44,7 @@ Currently, the project provides five single-purpose tools, all exposed as shell 
 
 As new use cases are discovered, new tools will likely be added to cover those operations but all will use the metadata model to describe what needs to be done.
 
-## The Metadata Model
+### The Metadata Model
 
 The metadata model (or model, for short) is a version-independent description of a WebLogic Server domain configuration.  The tools are designed to support a sparse model so that the model need only describe what is required for the specific operation without describing other artifacts.  For example, to deploy an application that depends on a JDBC data source into an existing domain that may contain other applications or data sources, the model needs to describe only the application and the data source in question.  If the datasource was previously created, the `deployApps` tool will not try to recreate it but may update part of that data source's configuration if the model description is different than the existing values.  If the application was previously deployed, the `deployApps` tool will compare the binaries to determine if the application needs to be redeployed or not.  In short, the `deployApps` tool supports an iterative deployment model so there is no need to change the model to remove pieces that were created in a previous deployment.
 
@@ -305,6 +305,6 @@ topology:
 
 ```
 
-## Downloading and Installing the Software
+### Downloading and Installing the Software
 
 The Oracle WebLogic Server Deploy Tooling project repository is located at [`https://github.com/oracle/weblogic-deploy-tooling`](https://github.com/oracle/weblogic-deploy-tooling).  Binary distributions of the `weblogic-deploy.zip` installer can be downloaded from the [GitHub Releases page](https://github.com/oracle/weblogic-deploy-tooling/releases).  To install the software, simply unzip the `weblogic-deploy.zip` installer on a machine that has the desired versions of WebLogic Server installed.  After being unzipped, the software is ready to use, just set the `JAVA_HOME` environment variable to point to a Java 7 or higher JDK  and the shell scripts are ready to run.

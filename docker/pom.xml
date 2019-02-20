@@ -91,6 +91,63 @@
 
     <profiles>
         <profile>
+            <id>copy</id>
+            <build>
+                <defaultGoal>dependency:copy</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>all-up</id>
+            <build>
+                <defaultGoal>dependency:copy docker-compose:up</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.dkanejs.maven.plugins</groupId>
+                        <artifactId>docker-compose-maven-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                            <detachedMode>true</detachedMode>
+                            <composeFile>${project.basedir}/src/main/docker/docker-compose-all.yaml</composeFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>all-down</id>
+            <build>
+                <defaultGoal>docker-compose:down</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>com.dkanejs.maven.plugins</groupId>
+                        <artifactId>docker-compose-maven-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                            <detachedMode>false</detachedMode>
+                            <composeFile>${project.basedir}/src/main/docker/docker-compose-all.yaml</composeFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>ci-up</id>
             <build>
                 <defaultGoal>dependency:copy docker-compose:up</defaultGoal>

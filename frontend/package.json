@@ -3,12 +3,17 @@
   "version": "1.0.0-SNAPSHOT",
   "private": true,
   "scripts": {
-    "start": "npm run serve",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "start": "vue-cli-service serve",
+    "start-ci": "vue-cli-service serve --mode ci-dev",
+    "start-all": "vue-cli-service serve --mode all-dev",
+    "build": "vue-cli-service build --mode all",
+    "build-ci": "vue-cli-service build --mode ci",
+    "build-all": "vue-cli-service build --mode all"
   },
   "dependencies": {
     "markdown-it": "8.4.2",
+    "material-design-icons": "3.0.1",
+    "materialize-css": "1.0.0",
     "vue": "2.6.6",
     "vue-router": "3.0.2"
   },

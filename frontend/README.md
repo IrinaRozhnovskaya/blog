@@ -3,7 +3,9 @@
 
 ```bash
 # bootstrap backend
-./mvnw ; ./mvnw -f docker/pom.xml -P ci-up
+./mvnw
+./mvnw -f docker/pom.xml -P copy
+./mvnw -f docker/pom.xml -P ci-up
 
 # populate test data
 ./mvnw -f blog-cli/pom.xml \
@@ -11,5 +13,6 @@
       -Dexec.mainClass=com.github.sigma.blog.TestData
 
 # start frontend ion dev mode
-cd frontend ; npm start
+cd frontend
+npm run start-ci
 ```

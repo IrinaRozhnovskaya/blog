@@ -2,6 +2,7 @@
   <div class="home">
     <!--<img alt="Vue logo" src="../assets/logo.png">-->
     <h1>Welcome to my {{ appName }}!</h1>
+    <br/>
     <ul v-for="post in posts">
       <Post :post="post"/>
     </ul>
@@ -35,7 +36,10 @@
       fetchData() {
         fetch(`${this.blogServiceBaseUrl}/api/v1/posts/find-all`)
           .then(data => data.json())
-          .then(posts => this.posts = posts)
+          .then(posts => {
+            if (posts.length)
+              this.posts = posts;
+          })
       },
     },
   };
