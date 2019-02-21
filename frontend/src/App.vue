@@ -10,11 +10,21 @@
 </template>
 
 <script>
+  import M from 'materialize-css';
   export default {
     data() {
       return {
         blogServiceBaseUrl: process.env.VUE_APP_BLOG_SERVICE_BASE_URL,
       }
     },
+    mounted() {
+      M.AutoInit(document.body);
+    }
   }
 </script>
+
+<style>
+  body {
+    padding: 2%;
+  }
+</style>

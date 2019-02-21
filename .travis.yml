@@ -50,6 +50,11 @@ script:
   - ./mvnw -f docker/pom.xml -P ci-up
   - ./mvnw -f integration-tests/pom.xml -P it
   - ./mvnw -f docker/pom.xml -P ci-down
+  #
+  - ./mvnw -f docker/pom.xml -P all-up
+  - http :80/
+  - http :80/blog/api
+  - ./mvnw -f docker/pom.xml -P all-down
 
 cache:
   directories:

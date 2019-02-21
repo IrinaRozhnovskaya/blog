@@ -27,6 +27,7 @@
         <module>docs</module>
         <module>docker</module>
         <module>integration-tests</module>
+        <module>blog-cli</module>
     </modules>
 
     <build>
