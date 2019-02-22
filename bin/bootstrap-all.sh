@@ -13,8 +13,14 @@
 ## NOTE:
 # for some reasons not worked: wget -qO- https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh | bash
 
+ARG1=$1
+if [[ ".${ARG1}" == "." ]] ; then
+  export GITHUB_REPO_ID="IrinaRozhnovskaya/blog"
+else
+  export GITHUB_REPO_ID="${ARG1}"
+fi
+
 export REPO_NAME="blog"
-export GITHUB_REPO_ID="IrinaRozhnovskaya/blog"
 export BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export REPO_DIR="${BASE_DIR}/${REPO_NAME}"
 export GITHUB_REPO_URL="https://github.com/${GITHUB_REPO_ID}"
