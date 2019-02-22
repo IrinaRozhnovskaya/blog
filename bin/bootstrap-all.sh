@@ -34,3 +34,5 @@ docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml down -v --
 docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml build --pull --force-rm
 docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d
 docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
+
+# open http://${play-with-docker-generated-host}-80.direct.labs.play-with-docker.com/
