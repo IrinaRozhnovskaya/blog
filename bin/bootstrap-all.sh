@@ -5,7 +5,7 @@
 ##############################################################################################################
 
 # wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
-# bash <(curl -sSfL https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh)
+# source <(curl -s https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh)
 
 export REPO_NAME="blog"
 export GITHUB_REPO_ID="daggerok/blog-1"
