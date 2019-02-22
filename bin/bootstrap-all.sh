@@ -7,7 +7,6 @@
 ## start from these commands:
 # apk add --upgrade wget
 # wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
-# time $(wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash)
 
 export REPO_NAME="blog"
 export GITHUB_REPO_ID="daggerok/blog-1"
