@@ -2,10 +2,8 @@
 
 ##############################################################################################################
 ## This script intended to use in Linux Alpine "Play with Docker" environment with "wget" already installed ##
-##############################################################################################################e
+##############################################################################################################
 
-## start from these commands:
-# apk add --upgrade wget
 # wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
 
 export REPO_NAME="blog"
@@ -32,8 +30,7 @@ docker run --rm --name build-blog -it -v build-data:/root/.m2   -v $(pwd)/blog:/
 docker run --rm --name build-blog -it -v build-data:/root/.m2   -v $(pwd)/blog:/tmp/blog -w /tmp/blog maven:3.6.0-jdk-8-alpine mvn -DskipTests -f blog-cli/pom.xml
 docker run --rm --name build-blog -it -v build-data:/root/.npm  -v $(pwd)/blog/frontend:/tmp/frontend -w /tmp/frontend node:11.10.0-alpine ash -c "npm i && npm run build"
 
-docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml down -v --rmi local \
- && docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml build --pull --force-rm \
- && docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d \
- && docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
-
+docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml down -v --rmi local
+docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml build --pull --force-rm
+docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d
+docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
