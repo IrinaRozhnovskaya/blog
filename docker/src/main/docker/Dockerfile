@@ -1,4 +1,4 @@
-FROM daggerok/jboss-eap-6.4:6.4.21-alpine
+FROM daggerok/jboss-eap-6.4:6.4.0-alpine
 RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -Djboss.bind.address=0.0.0.0 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005\"" >> ${JBOSS_HOME}/bin/standalone.conf
 EXPOSE 5005 9990 9999
 HEALTHCHECK --timeout=1s --retries=66 \
