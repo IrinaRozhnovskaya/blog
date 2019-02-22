@@ -4,14 +4,13 @@
 ## This script intended to use in Linux Alpine "Play with Docker" environment with "wget" already installed ##
 ##############################################################################################################
 
-## Play with Docker
+## Play with Docker / Play with Kubernetes
 # source <(curl -s https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh)
-
-## Play with Kubernetes
-# source <(curl -s https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh)
+# source <(curl -s https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh)
 
 ## NOTE:
 # for some reasons not worked: wget -qO- https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh | bash
+# yum install -y wget bash ; rm -rf bootstrap-all.sh ; wget https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh && bash bootstrap-all.sh daggerok/blog-1
 
 ARG1=$1
 if [[ ".${ARG1}" == "." ]] ; then
@@ -40,13 +39,19 @@ else
 fi
 
 docker volume create --name build-data
-docker run --rm --name build-blog -it -v build-data:/root/.m2   -v $(pwd)/blog:/tmp/blog -w /tmp/blog maven:3.6.0-jdk-8-alpine mvn -DskipTests -f backend/pom.xml
-docker run --rm --name build-blog -it -v build-data:/root/.m2   -v $(pwd)/blog:/tmp/blog -w /tmp/blog maven:3.6.0-jdk-8-alpine mvn -DskipTests -f blog-cli/pom.xml
-docker run --rm --name build-blog -it -v build-data:/root/.npm  -v $(pwd)/blog/frontend:/tmp/frontend -w /tmp/frontend node:11.10.0-alpine ash -c "npm i && npm run build"
+docker run --rm --name build-blog -it -v build-data:/root/.m2  -v $(pwd)/blog:/tmp/blog              -w /tmp/blog     maven:3.6.0-jdk-8-alpine mvn -DskipTests -f docker/pom.xml -P copy
+docker run --rm --name build-blog -it -v build-data:/root/.m2  -v $(pwd)/blog:/tmp/blog              -w /tmp/blog     maven:3.6.0-jdk-8-alpine  mvn -DskipTests -f backend/pom.xml
+docker run --rm --name build-blog -it -v build-data:/root/.m2  -v $(pwd)/blog:/tmp/blog              -w /tmp/blog     maven:3.6.0-jdk-8-alpine  mvn -DskipTests -f blog-cli/pom.xml
+docker run --rm --name build-blog -it -v build-data:/root/.npm -v $(pwd)/blog/frontend:/tmp/frontend -w /tmp/frontend node:11.10.0-alpine       ash -c "npm i && npm run build"
 
-docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml down -v --rmi local
-docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml build --pull --force-rm
-docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d
+#docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml down -v # --rmi local
+#docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml build --pull --force-rm
+#docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d
+#docker ps
+#docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
+
+docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d --build
+docker ps
 docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
 
 # open http://${play-with-docker-generated-host}-80.direct.labs.play-with-docker.com/

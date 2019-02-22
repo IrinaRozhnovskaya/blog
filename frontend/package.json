@@ -9,7 +9,8 @@
     "start-play-with-docker": "vue-cli-service serve --mode play-with-docker-dev",
     "build": "vue-cli-service build --mode all",
     "build-ci": "vue-cli-service build --mode ci",
-    "build-all": "vue-cli-service build --mode all"
+    "build-all": "vue-cli-service build --mode all",
+    "build-play-with-docker": "vue-cli-service build --mode play-with-docker"
   },
   "dependencies": {
     "markdown-it": "8.4.2",
