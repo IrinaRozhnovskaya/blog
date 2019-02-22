@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Blog from './views/Blog.vue';
+import PostView from "./views/blog/PostView";
 
 Vue.use(Router);
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'blog',
       component: Blog
+    },
+    {
+      path: '/posts/:title',
+      name: 'postView',
+      component: PostView
     },
     {
       path: '/admin',

@@ -32,9 +32,3 @@
     },
   };
 </script>
-
-<style>
-  ul {
-    list-style: none;
-  }
-</style>

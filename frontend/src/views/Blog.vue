@@ -4,6 +4,7 @@
     <h1>Welcome to my {{ appName }}!</h1>
     <br/>
     <ul v-for="post in posts">
+      <p class="right"><router-link :to="{ name: 'postView', params: { title: post.title }}">open this posts</router-link></p>
       <Post :post="post"/>
     </ul>
   </div>

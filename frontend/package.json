@@ -6,6 +6,7 @@
     "start": "vue-cli-service serve",
     "start-ci": "vue-cli-service serve --mode ci-dev",
     "start-all": "vue-cli-service serve --mode all-dev",
+    "start-play-with-docker": "vue-cli-service serve --mode play-with-docker-dev",
     "build": "vue-cli-service build --mode all",
     "build-ci": "vue-cli-service build --mode ci",
     "build-all": "vue-cli-service build --mode all"
