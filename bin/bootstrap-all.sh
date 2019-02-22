@@ -4,8 +4,8 @@
 ## This script intended to use in Linux Alpine "Play with Docker" environment with "wget" already installed ##
 ##############################################################################################################
 
-# wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
 # source <(curl -s https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh)
+# for some reasons not worked: wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
 
 export REPO_NAME="blog"
 export GITHUB_REPO_ID="daggerok/blog-1"
