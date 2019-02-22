@@ -4,17 +4,24 @@
 ## This script intended to use in Linux Alpine "Play with Docker" environment with "wget" already installed ##
 ##############################################################################################################
 
-# source <(curl -s https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh)
-# for some reasons not worked: wget -qO- https://raw.githubusercontent.com/daggerok/blog-1/master/bin/bootstrap-all.sh | bash
+## Play with Docker
+# source <(curl -s https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh)
+
+## Play with Kubernetes
+# source <(curl -s https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh)
+
+## NOTE:
+# for some reasons not worked: wget -qO- https://raw.githubusercontent.com/IrinaRozhnovskaya/blog/master/bin/bootstrap-all.sh | bash
 
 export REPO_NAME="blog"
-export GITHUB_REPO_ID="daggerok/blog-1"
+export GITHUB_REPO_ID="IrinaRozhnovskaya/blog"
 export BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export REPO_DIR="${BASE_DIR}/${REPO_NAME}"
 export GITHUB_REPO_URL="https://github.com/${GITHUB_REPO_ID}"
 
-apk add -q --upgrade git nodejs npm
-git config --global user.name "Play With Docker"
+yum install -yq git bash
+apk add -q --upgrade git bash
+git config --global user.name "Play with Docker / Kubernetes User"
 git config --global user.email "play.with.docker@example.com"
 
 if [[ -d "${REPO_DIR}" ]] ; then
@@ -37,3 +44,4 @@ docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml up -d
 docker-compose -f blog/docker/src/main/docker/docker-compose-all.yaml logs -f -t
 
 # open http://${play-with-docker-generated-host}-80.direct.labs.play-with-docker.com/
+# open http://${play-with-k8s-generated-host}-80.direct.labs.play-with-k8s.com/
