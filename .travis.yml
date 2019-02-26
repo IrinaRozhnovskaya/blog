@@ -61,3 +61,22 @@ cache:
     - ./frontend/node_modules
     - ~/.docker
     - ~/.m2
+env:
+  global:
+    secure: YqKpp0HghdX+gif0X+D2iSwWTI7MTZZv2rSxNs4F6cxnCo4A8S1BGA53kRk9LpcF5cknR54a6kEGjplzm9cQBYL0itK3dCldMymL59GvgYXbqmf7I4q/7yyeYYpbEN/P+hiiTB5NVoBNABDc+7J+VpqkLhzSEWB+Td1nIv7y+r8UtCp5wXtZk5oRexGHara319WyUCFuLhzLqCarLcu5Ga0em1XbapeaOiExcwJ91ckuaW2UuY/tar3GKX0/gpBZOkS2eecy7zY3CufGjqkUbYp1IB5SBRugd95JqpKOMWIM69cI8M5fekhlztCzSCYalMZaZod+ltvQjEkYKzULHSLg6aazkrnOsgPt63RHzVn2BbKzWr0Ks5Tw19kz3WO+wRe9h1ifpTQiEQPKBpRfSO6mSsv6VUtHKcWSmXPxoMqJ1SZLRTMn9+AYb/iZvVpR8R9alF/7oUI9Qzcru8dpKwG2svqs/Qv6GJgEZj4/Ur2MamfUJHKp47remMvMobK1P8JJvAuGq74fvPrLdoFDqurxkiXc8r333T0c/AIq3qvMb5dmHfKKNLoj0R5HMAH0c9rjrClbcQuN9t4demu3RWmmkGMngOlhVxhqjg1v6mi4811Yoo65gfTzE8WcMnp8jLTiy53A6TsJm12611DH7uZQFGHmmk1ghEdpkVQy5l8=
+
+before_deploy:
+  # build documentation
+  - ./mvnw -f docs/pom.xml
+  - mkdir -p public
+  - cp -Rf public/index.html public/404.html
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: "$GITHUB_TOKEN"
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public
+  target_branch: gh-pages
