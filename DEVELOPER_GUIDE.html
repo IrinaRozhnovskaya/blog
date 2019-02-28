@@ -454,23 +454,49 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="setup-development-environment"><a class="anchor" href="#setup-development-environment"></a>Setup development environment</h3>
 <div class="paragraph">
-<p>TODO: Describe requirements and software to be installed (JDK, Docker, HTTPie etc&#8230;&#8203;)</p>
+<p>JDK 8, Docker, nodejs, npm, HTTPie should be installed</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="build-run-and-test-with-docker"><a class="anchor" href="#build-run-and-test-with-docker"></a>build, run and test with Docker</h3>
+<div class="paragraph">
+<p>build</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvnw -pl :backend &amp; mvnw -pl docker -P up
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P up
 
 http    get :8080/blog/api
 http    get :8080/blog/api/v1/posts/find-all
 http   post :8080/blog/api/v1/posts/create     title=title body=ololo
 http   post :8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
 http    put :8080/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
-http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000
-
-mvnw -pl :docker -P down</code></pre>
+http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>test</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-up
+mvnw -f integration-tests\pom.xml -P it</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>cleanup</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-down</code></pre>
 </div>
 </div>
 </div>
@@ -498,7 +524,7 @@ curl http://127.0.0.1:5000</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-02-26 07:32:19 UTC
+Last updated 2019-02-28 11:16:44 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">

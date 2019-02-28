@@ -467,7 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Irina Rozhnovskaya &lt;irina.rozhnovskay@gmail.com&gt;</span><br>
 <span id="revnumber">version 1.0.0-SNAPSHOT,</span>
-<span id="revdate">2019-02-26 07:32:19 UTC</span>
+<span id="revdate">2019-02-28 11:16:44 UTC</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -486,7 +486,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#create-new-post">Create new post</a></li>
 <li><a href="#show-all-posts">Show all posts</a></li>
 <li><a href="#show-one-post">Show one post</a></li>
-<li><a href="#edit-one-post">Edit one post</a></li>
+<li><a href="#edit-post">Edit post</a></li>
+<li><a href="#delete-post">Delete post</a></li>
 </ul>
 </li>
 <li><a href="#rest-api-testing-guide">REST API Testing guide</a></li>
@@ -500,23 +501,49 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="setup-development-environment"><a class="anchor" href="#setup-development-environment"></a>Setup development environment</h3>
 <div class="paragraph">
-<p>TODO: Describe requirements and software to be installed (JDK, Docker, HTTPie etc&#8230;&#8203;)</p>
+<p>JDK 8, Docker, nodejs, npm, HTTPie should be installed</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="build-run-and-test-with-docker"><a class="anchor" href="#build-run-and-test-with-docker"></a>build, run and test with Docker</h3>
+<div class="paragraph">
+<p>build</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvnw -pl :backend &amp; mvnw -pl docker -P up
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P up
 
 http    get :8080/blog/api
 http    get :8080/blog/api/v1/posts/find-all
 http   post :8080/blog/api/v1/posts/create     title=title body=ololo
 http   post :8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
 http    put :8080/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
-http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000
-
-mvnw -pl :docker -P down</code></pre>
+http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>test</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-up
+mvnw -f integration-tests\pom.xml -P it</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>cleanup</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-down</code></pre>
 </div>
 </div>
 </div>
@@ -579,12 +606,13 @@ curl http://127.0.0.1:5000</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
 <p class="tableblock"><strong>Content:</strong> <code>{
                "links": {
-                      "_self        GET": "http://localhost:8080/blog/api",
-                   "create new: POST": "http://localhost:8080/blog/api/post/new",
-                   "find all     GET": "http://localhost:8080/blog/api/post/all",
-                   "find one     GET": "http://localhost:8080/blog/api/post/one",
-                   "health       GET": "http://localhost:8080/blog/api/health",
-                   "update new:  PUT": "http://localhost:8080/blog/api/post/edit"
+                   "_self              ": "http://localhost:8080/blog/api",
+                   "create post:       ": "http://localhost:8080/blog/api/v1/posts/create  title={markdown} body={markdown}",
+                   "find all posts     ": "http://localhost:8080/blog/api/v1/posts/find-all",
+                   "find post by id    ": "http://localhost:8080/blog/api/v1/posts/find-by-id id={uuid}",
+                   "health status      ": "http://localhost:8080/blog/api/health",
+                   "update posts:      ": "http://localhost:8080/blog/api/v1/posts/update id={uuid}"
+                   "remove posts:      ": "http://localhost:8080/blog/api/v1/posts/delete id={uuid} title={markdown} body={markdown}"
                }
            } </code></p></td>
 </tr>
@@ -606,7 +634,7 @@ curl http://127.0.0.1:5000</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/post/new</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/create</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
@@ -614,18 +642,18 @@ curl http://127.0.0.1:5000</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock"><code>data=[String]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p>
+<p class="tableblock"><code>title=[String]  body=[String]</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 201 Created</p>
 <p class="tableblock"><strong>Content:</strong> <code>{} </code></p>
-<p class="tableblock"><strong>Location:</strong> <code>/blog/api/post/new/api/post/new?id=:id</code></p></td>
+<p class="tableblock"><strong>Location:</strong> <code>/blogapiv1postscreateid=:id</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -645,7 +673,7 @@ curl http://127.0.0.1:5000</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/post/all</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/find-all</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
@@ -663,9 +691,15 @@ curl http://127.0.0.1:5000</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong> <code>{"post":
+<p class="tableblock"><strong>Content:</strong>
 [
-{"body":"trololo","id":"9b4366bd-e0e6-4c0b-b46a-4329efadd5a1","when":"2019.01.18 15:57 GMT"},{"body":"ololo","id":"d9252cb6-88e8-4a92-831e-745241ffe3f7","when":"2019.01.18 15:00 GMT"}]} </code></p></td>
+    {
+        "body": "ololo",
+        "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+        "lastModifiedAt": "2019.02.15 15:30 GMT",
+        "title": "title"
+    }
+]</p></td>
 </tr>
 </tbody>
 </table>
@@ -685,7 +719,7 @@ curl http://127.0.0.1:5000</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/post/one</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/find-by-id</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
@@ -705,11 +739,10 @@ curl http://127.0.0.1:5000</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
 <p class="tableblock"><strong>Content:</strong> <code>
 {
-    "postResponse": {
-        "body": "trololo",
-        "id": "5e48ee43-d428-4bbe-bcbc-0d860ca96e63",
-        "when": "2019.01.18 13:25 GMT"
-    }
+    "body": "ololo",
+    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+    "lastModifiedAt": "2019.02.15 15:30 GMT",
+    "title": "title"
 }
  </code></p></td>
 </tr>
@@ -717,7 +750,7 @@ curl http://127.0.0.1:5000</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="edit-one-post"><a class="anchor" href="#edit-one-post"></a>Edit one post</h3>
+<h3 id="edit-post"><a class="anchor" href="#edit-post"></a>Edit post</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -731,7 +764,7 @@ curl http://127.0.0.1:5000</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/post/edit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/update</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
@@ -745,18 +778,59 @@ curl http://127.0.0.1:5000</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id=[UUID]</code></p>
-<p class="tableblock"><code>data=[String]</code></p></td>
+<p class="tableblock"><code>title=[String] body=[String]</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
 <p class="tableblock"><strong>Content:</strong> <code>
 {
-    "postResponse": {
-        "body": "editedOlolo",
-        "id": "4e103103-9d5a-42ec-873a-58f1bed6ef44",
-        "when": "2019.01.18 13:27 GMT"
-    }
+    "body": "trololo",
+    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
+    "lastModifiedAt": "2019.02.15 15:58 GMT",
+    "title": "title"
+}
+ </code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="delete-post"><a class="anchor" href="#delete-post"></a>Delete post</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show one post</strong></p>
+<p class="tableblock">Returns json data of one post.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/delete</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
+<p class="tableblock">None</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id=[UUID]</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
+<p class="tableblock"><strong>Content:</strong> <code>
+{
+    "message": "Post with id '674b289d-1f3f-4285-beef-79e27772b3e6' was removed."
 }
  </code></p></td>
 </tr>
@@ -771,7 +845,12 @@ curl http://127.0.0.1:5000</code></pre>
 <div class="listingblock">
 <div class="title">important! To successfully query JSON arrays, you  have to use jackson mapper and properly configure JAX-RS client:</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in includes/TESTING.adoc - include::../../../integration-tests/src/test/java/com/github/sigma/blog/RestApiTests.java[tags=jackson]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private static JacksonJsonProvider jacksonJsonProvider = new JacksonJaxbJsonProvider()
+            .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+    final static Client restClient = ClientBuilder.newBuilder()
+            .register(jacksonJsonProvider)
+            .build();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -783,7 +862,7 @@ curl http://127.0.0.1:5000</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2019-02-26 07:32:19 UTC
+Last updated 2019-02-28 11:16:44 UTC
 </div>
 </div>
 <!-- jquery -->
