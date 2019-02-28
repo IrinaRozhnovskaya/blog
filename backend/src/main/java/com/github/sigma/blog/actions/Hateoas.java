@@ -30,17 +30,4 @@ public class Hateoas {
             throw new RuntimeException(e);
         }
     }
-
-    /**
-     * Gets posts location.
-     *
-     * @param request not nullable {@link HttpServletRequest} instance.
-     * @param id non nullable posts identifier.
-     * @return HTTP location to posts.
-     */
-    public String getPostLocation(HttpServletRequest request, String id) {
-        Objects.requireNonNull(request, "request may not be null.");
-        Objects.requireNonNull(id, "id may not be null.");
-        return linkTo(request, "api", "v1", "posts", "create", format("id=%s", id));
-    }
 }

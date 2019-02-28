@@ -58,10 +58,7 @@ public class CreatePostResource extends BaseRestResource {
     public String create() {
         final PostRequest payload = PostRequest.of(title, body);
         created = postService.save(payload);
-        final HttpServletRequest request = ServletActionContext.getRequest();
-        final String location = hateoas.getPostLocation(request, created.getId());
         final HttpServletResponse resp = ServletActionContext.getResponse();
-        resp.setHeader(LOCATION, location);
         resp.setStatus(201); // CREATED HTTP created code
         return SUCCESS;
     }
