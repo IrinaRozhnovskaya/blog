@@ -467,7 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Irina Rozhnovskaya &lt;irina.rozhnovskay@gmail.com&gt;</span><br>
 <span id="revnumber">version 1.0.0-SNAPSHOT,</span>
-<span id="revdate">2019-02-28 11:24:44 UTC</span>
+<span id="revdate">2019-03-04 09:05:32 UTC</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -506,42 +506,34 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect2">
 <h3 id="build-run-and-test-with-docker"><a class="anchor" href="#build-run-and-test-with-docker"></a>build, run and test with Docker</h3>
-<div class="paragraph">
-<p>build</p>
-</div>
 <div class="listingblock">
+<div class="title">build</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>run</p>
-</div>
 <div class="listingblock">
+<div class="title">run</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P up
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P all-up
 
-http    get :8080/blog/api
-http    get :8080/blog/api/v1/posts/find-all
-http   post :8080/blog/api/v1/posts/create     title=title body=ololo
-http   post :8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
-http    put :8080/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
-http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000</code></pre>
+http    get :80/blog/api
+http    get :80/blog/api/v1/posts/find-all
+http   post :80/blog/api/v1/posts/create     title=title body=ololo
+http   post :80/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
+http    put :80/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
+http delete :80/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>test</p>
 </div>
 <div class="listingblock">
+<div class="title">test</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-up
 mvnw -f integration-tests\pom.xml -P it</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>cleanup</p>
-</div>
 <div class="listingblock">
+<div class="title">cleanup</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">mvnw -f docker\pom.xml -P ci-down</code></pre>
 </div>
@@ -573,269 +565,162 @@ curl http://127.0.0.1:5000</code></pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="show-api-description"><a class="anchor" href="#show-api-description"></a>Show API description</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show API description</strong></p>
-<p class="tableblock">Returns json data with API description.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET/POST</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong> <code>{
-               "links": {
-                   "_self              ": "http://localhost:8080/blog/api",
-                   "create post:       ": "http://localhost:8080/blog/api/v1/posts/create  title={markdown} body={markdown}",
-                   "find all posts     ": "http://localhost:8080/blog/api/v1/posts/find-all",
-                   "find post by id    ": "http://localhost:8080/blog/api/v1/posts/find-by-id id={uuid}",
-                   "health status      ": "http://localhost:8080/blog/api/health",
-                   "update posts:      ": "http://localhost:8080/blog/api/v1/posts/update id={uuid}"
-                   "remove posts:      ": "http://localhost:8080/blog/api/v1/posts/delete id={uuid} title={markdown} body={markdown}"
-               }
-           } </code></p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http get :80/blog/api
+
+HTTP/1.1 200 OK
+Content-Length: 582
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:09:28 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    " _self           ": "http://localhost/blog/api",
+    " create post     ": "http://localhost/blog/api/v1/posts/create     title={markdown} body={markdown}",
+    " find all posts  ": "http://localhost/blog/api/v1/posts/find-all",
+    " find post by id ": "http://localhost/blog/api/v1/posts/find-by-id id={uuid}",
+    " health status   ": "http://localhost/blog/api/health",
+    " remove posts    ": "http://localhost/blog/api/v1/posts/delete     id={uuid}",
+    " update posts    ": "http://localhost/blog/api/v1/posts/update     id={uuid} title={markdown} body={markdown}"
+}</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="create-new-post"><a class="anchor" href="#create-new-post"></a>Create new post</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Create new post</strong></p>
-<p class="tableblock">Returns location of created post.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/create</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p>
-<p class="tableblock"><code>title=[String]  body=[String]</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 201 Created</p>
-<p class="tableblock"><strong>Content:</strong> <code>{} </code></p>
-<p class="tableblock"><strong>Location:</strong> <code>/blogapiv1postscreateid=:id</code></p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http   post :80/blog/api/v1/posts/create title=title body=ololo
+
+HTTP/1.1 201 Created
+Content-Length: 116
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:17:31 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "body": "ololo",
+    "id": "7e362115-7b8a-4ba2-9887-25b50eaf4785",
+    "lastModifiedAt": "2019.03.01 16:17 GMT",
+    "title": "title"
+}</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="show-all-posts"><a class="anchor" href="#show-all-posts"></a>Show all posts</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show all posts</strong></p>
-<p class="tableblock">Returns json data of all posts.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/find-all</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET/POST</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong>
-[
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http get :80/blog/api/v1/posts/find-all
+
+HTTP/1.1 200 OK
+Content-Length: 32394
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:17:47 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
     {
         "body": "ololo",
-        "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
-        "lastModifiedAt": "2019.02.15 15:30 GMT",
+        "id": "7e362115-7b8a-4ba2-9887-25b50eaf4785",
+        "lastModifiedAt": "2019.03.01 16:17 GMT",
         "title": "title"
-    }
-]</p></td>
-</tr>
-</tbody>
-</table>
+    },
+    {
+        "body": "##Hello \n\n```java\n// comment\n```\n",
+        "id": "54e84f54-6366-4683-a9cf-d8240a58ebb1",
+        "lastModifiedAt": "2019.03.01 16:01 GMT",
+        "title": "8 Hello Java"
+    },
+    ...
+]</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="show-one-post"><a class="anchor" href="#show-one-post"></a>Show one post</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show one post</strong></p>
-<p class="tableblock">Returns json data of one post.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/find-by-id</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET/POST</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id=[UUID]</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong> <code>
-{
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http   post :80/blog/api/v1/posts/find-by-id id=7e362115-7b8a-4ba2-9887-25b50eaf4785
+
+HTTP/1.1 200 OK
+Content-Length: 116
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:28:34 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "body": "ololo",
-    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
-    "lastModifiedAt": "2019.02.15 15:30 GMT",
+    "id": "7e362115-7b8a-4ba2-9887-25b50eaf4785",
+    "lastModifiedAt": "2019.03.01 16:17 GMT",
     "title": "title"
-}
- </code></p></td>
-</tr>
-</tbody>
-</table>
+}</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="edit-post"><a class="anchor" href="#edit-post"></a>Edit post</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show one edited post</strong></p>
-<p class="tableblock">Returns json data of one edited post.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/update</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id=[UUID]</code></p>
-<p class="tableblock"><code>title=[String] body=[String]</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong> <code>
-{
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http    put :80/blog/api/v1/posts/update     id=7e362115-7b8a-4ba2-9887-25b50eaf4785 title=title body=trololo
+
+HTTP/1.1 200 OK
+Content-Length: 118
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:31:10 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "body": "trololo",
-    "id": "674b289d-1f3f-4285-beef-79e27772b3e6",
-    "lastModifiedAt": "2019.02.15 15:58 GMT",
+    "id": "7e362115-7b8a-4ba2-9887-25b50eaf4785",
+    "lastModifiedAt": "2019.03.01 16:31 GMT",
     "title": "title"
-}
- </code></p></td>
-</tr>
-</tbody>
-</table>
+}</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="delete-post"><a class="anchor" href="#delete-post"></a>Delete post</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Title</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Show one post</strong></p>
-<p class="tableblock">Returns json data of one post.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/api/v1/posts/delete</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Method</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URL Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Required:</strong></p>
-<p class="tableblock">None</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Data Params</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id=[UUID]</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Success Response</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code:</strong> 200 OK</p>
-<p class="tableblock"><strong>Content:</strong> <code>
-{
-    "message": "Post with id '674b289d-1f3f-4285-beef-79e27772b3e6' was removed."
-}
- </code></p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">request: http delete :80/blog/api/v1/posts/delete id=7e362115-7b8a-4ba2-9887-25b50eaf4785
+
+HTTP/1.1 200 OK
+Content-Length: 78
+Content-Type: application/json;charset=UTF-8
+Date: Fri, 01 Mar 2019 16:34:11 GMT
+Server: Apache-Coyote/1.1</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "message": "Post with id '7e362115-7b8a-4ba2-9887-25b50eaf4785' was removed."
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -862,7 +747,7 @@ curl http://127.0.0.1:5000</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2019-02-28 11:24:44 UTC
+Last updated 2019-03-04 09:05:32 UTC
 </div>
 </div>
 <!-- jquery -->
