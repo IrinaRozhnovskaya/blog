@@ -109,6 +109,7 @@ public class RestApiV1PostsFlowIntegrationTests {
     private void should_delete_created_post(){
         final Response deletePostResponse = jsonBuilder("/posts/delete").post(deletePostEntity());
         log.info("deletePostResponse: {}", deletePostResponse);
+        assertThat(deletePostResponse.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
     }
 
         @After

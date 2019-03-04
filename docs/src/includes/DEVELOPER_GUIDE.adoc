@@ -6,35 +6,42 @@
 JDK 8, Docker, nodejs, npm, HTTPie should be installed
 
 === build, run and test with Docker
-build
+.build
 
 [source, cmd]
 ----
 mvnw
 ----
-run
+
+.run
+
 [source, cmd]
 ----
-mvnw -f docker\pom.xml -P up
+mvnw -f docker\pom.xml -P all-up
 
-http    get :8080/blog/api
-http    get :8080/blog/api/v1/posts/find-all
-http   post :8080/blog/api/v1/posts/create     title=title body=ololo
-http   post :8080/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
-http    put :8080/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
-http delete :8080/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000
+http    get :80/blog/api
+http    get :80/blog/api/v1/posts/find-all
+http   post :80/blog/api/v1/posts/create     title=title body=ololo
+http   post :80/blog/api/v1/posts/find-by-id id=00000000-0000-0000-0000-000000000000
+http    put :80/blog/api/v1/posts/update     id=00000000-0000-0000-0000-000000000000 title=title body=trololo
+http delete :80/blog/api/v1/posts/delete     id=00000000-0000-0000-0000-000000000000
 ----
-test
+
+.test
+
 [source, cmd]
 ----
 mvnw -f docker\pom.xml -P ci-up
 mvnw -f integration-tests\pom.xml -P it
 ----
-cleanup
+
+.cleanup
+
 [source, cmd]
 ----
 mvnw -f docker\pom.xml -P ci-down
 ----
+
 === Documentation
 === run and test
 
